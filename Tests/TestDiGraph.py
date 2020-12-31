@@ -46,11 +46,15 @@ class TestDiGraph(unittest.TestCase):
         self.assertFalse(g.add_edge(1, 3, -4))  # should not allow negative weight
 
     def test_remove_edge(self):
+        """
+         verify that the method remove_edge is removing the correct edge
+        """
         g = DiGraph()
         g.add_node(1)
         g.add_node(2)
         g.add_edge(1, 2, 1)
         # basic graph with two vertices
+        self.assertFalse(g.remove_edge(1,1)) # there is no edge
         self.assertTrue(g.remove_edge(1, 2))  # remove the edge between (1,2)
         self.assertFalse(g.has_edge(1, 2))  # there is no edge
         self.assertFalse(g.remove_edge(1, 2))  # there is no edge
@@ -60,6 +64,9 @@ class TestDiGraph(unittest.TestCase):
         self.assertTrue(g.add_edge(2, 1, 1))  # the edge removed
 
     def test_remove_node(self):
+        """
+        verify that the node has been removed and all the edges he was connected with
+        """
         g = DiGraph()
         g.add_node(1)
         g.add_node(2)
@@ -80,6 +87,9 @@ class TestDiGraph(unittest.TestCase):
         self.assertFalse(g.has_edge(1, 2))  # there is no edge between (1,2)
 
     def test_v_size(self):
+        """
+        v_size return the correct number of vertices in the graph
+        """
         g = DiGraph()
         g.add_node(1)
         g.add_node(2)
@@ -99,6 +109,9 @@ class TestDiGraph(unittest.TestCase):
         self.assertEqual(g.VSize, 2)
 
     def test_e_size(self):
+        """
+        e_size return the correct number of edges in the graph
+        """
         g = DiGraph()
         g.add_node(1)
         g.add_node(2)
@@ -115,6 +128,9 @@ class TestDiGraph(unittest.TestCase):
         self.assertEqual(g.ESize, 0)  # there is no edge in the graph
 
     def test_get_mc(self):
+        """
+        verify that each change in the graph the mc increased at least by 1
+        """
         g = DiGraph()
         self.assertEqual(g.get_mc(), 0)  # there are no changes made in the graph
         g.add_node(1)
@@ -140,6 +156,9 @@ class TestDiGraph(unittest.TestCase):
         self.assertEqual(g.get_mc(), 7)  # the weight of the edge has been update ,so the mc increased by 1
 
     def test_get_all_v(self):
+        """
+        get_all_v need to return all the vertices in the graph
+        """
         g = DiGraph()
         self.assertEqual(g.get_all_v(), {})  # there are no edges in the graph
         g.add_node(1)
@@ -150,6 +169,10 @@ class TestDiGraph(unittest.TestCase):
         self.assertEqual(g.get_all_v(), {})
 
     def test_all_in_edges_of_node(self):
+        """
+         verify that this method return all the nodes that has edge into this node
+
+        """
         g = DiGraph()
         g.add_node(1)
         g.add_node(2)
@@ -163,6 +186,9 @@ class TestDiGraph(unittest.TestCase):
         self.assertEqual(g.all_in_edges_of_node(1), {2: 1, 3: 2})
 
     def test_all_out_edges_of_node(self):
+        """
+        verify that this method return all the nodes that has edge from this node
+        """
         g = DiGraph()
         g.add_node(1)
         g.add_node(2)
