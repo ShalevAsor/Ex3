@@ -54,7 +54,7 @@ class TestDiGraph(unittest.TestCase):
         g.add_node(2)
         g.add_edge(1, 2, 1)
         # basic graph with two vertices
-        self.assertFalse(g.remove_edge(1,1)) # there is no edge
+        self.assertFalse(g.remove_edge(1, 1))  # there is no edge
         self.assertTrue(g.remove_edge(1, 2))  # remove the edge between (1,2)
         self.assertFalse(g.has_edge(1, 2))  # there is no edge
         self.assertFalse(g.remove_edge(1, 2))  # there is no edge
@@ -194,7 +194,7 @@ class TestDiGraph(unittest.TestCase):
         g.add_node(2)
         self.assertEqual(g.all_out_edges_of_node(1), {})  # node 1 has no edge
         g.add_edge(1, 2, 1)  # edge from 2 to 1
-        self.assertEqual(g.all_out_edges_of_node(1), {2: 1})
+        self.assertEqual(g.all_out_edges_of_node(1), {2: 1})  # equal to {2:1} 
         g.add_edge(2, 1, 5)
         self.assertEqual(g.all_out_edges_of_node(1), {2: 1})
         g.add_node(3)
