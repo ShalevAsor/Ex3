@@ -1,33 +1,31 @@
 import unittest
-from src.node_data import NodeData
 from src.DiGraph import DiGraph
+from src.node_data import NodeData
 
-"""
- This is a test class for DWGraph_DS, each method has a separate test.
- each test examines edge cases
- """
-
-
-class TestDiGraph(unittest.TestCase):
+class MyTestCase(unittest.TestCase):
 
     def test_add_node(self):
         """
         verify add_node is adding the node only if he is not in the graph already
         """
         g = DiGraph()
-        self.assertTrue(g.add_node(0))  # add new node to g
-        self.assertFalse(g.add_node(0))  # node 0 is already in the graph
-        self.assertTrue(g.Nodes.__contains__(0))  # g contains the node associated with the key 0
-        self.assertFalse(g.add_node(0))  # verify is is not possible to add new node with the same key (0)
-        self.assertTrue(g.add_node(1, pos=(12, 11.3, 0)))  # add new node with pos
-        self.assertTrue(g.Nodes.__contains__(1))  # g contains the node above
-        self.assertEqual(g.Nodes.get(1).pos, (12, 11.3, 0))  # the node pos are equals
+        for i in range(5):
+            g.add_node(i)
+        self.assertEqual(0, g.get_node(0).key)
+        self.assertEqual(1, g.get_node(1).key)
+        self.assertEqual(2, g.get_node(2).key)
+        self.assertEqual(3, g.get_node(3).key)
+        self.assertEqual(4, g.get_node(4).key)
+        self.assertEqual(None, g.get_node(5))  # verify return None value when ordering un-existing node
+        self.assertFalse(g.add_node(0))        # verify that cant add same node
+        self.assertTrue(g.add_node(5, pos=(12, 11.3, 0)))  # add new node with pos
+        self.assertTrue(g.Nodes.__contains__(5))  # g contains the node above
+        self.assertEqual(g.Nodes.get(5).pos, (12, 11.3, 0))  # the node pos are equals
 
     def test_add_edge(self):
         """
          This test verify that connect (node1,node2) is not equal to connect (node2,node1),
          also that negative weight and connect nodes that are not in the graph is not allow
-
         """
         g = DiGraph()  # create a new graph
         g.add_node(1)  # add two nodes to g
@@ -37,13 +35,85 @@ class TestDiGraph(unittest.TestCase):
         self.assertFalse(g.add_edge(1, 1, 5))  # cannot add edge between node to himself
         self.assertTrue(g.add_edge(1, 2, 12))  # add edge between (1,2)
         self.assertFalse(g.add_edge(1, 2, 12))  # there is edge already between (1,2) with this weight
-        self.assertFalse(g.add_edge(1, 2, 1))  # update the new weight
-        self.assertEqual(g.get_edge(1, 2).weight, 1)  # the new weight is 1
+        self.assertFalse(g.add_edge(1, 2, 1))  # does not allow update in place there is an edge already
         self.assertTrue(g.add_edge(2, 1, 12))  # allows to add edge between (2,1)
-        self.assertFalse(g.add_edge(2, 1, 6))  # update the weight
-        self.assertEqual(g.get_edge(2, 1).weight, 6)
+        self.assertEqual(g.get_edge(2, 1).weight, 12)
         self.assertFalse(g.add_edge(2, 1, 6))
         self.assertFalse(g.add_edge(1, 3, -4))  # should not allow negative weight
+
+    def test_all_in_all_out(self):
+        """
+        this test verify the returned list of nodes pointing to
+        and nodes pointing from id1
+        this test will be preformed over a simple graph looks like:
+
+            1--►3
+            |   ▲
+            |  /
+            ▼ /
+            2
+        :return: dict
+        """
+        g = DiGraph()  # create a new graph
+        g.add_node(1)  # add two nodes to g
+        g.add_node(2)
+        g.add_node(3)
+        g.add_edge(1, 2, 12)
+        g.add_edge(1, 3, 13)
+        g.add_edge(2, 3, 23)
+        node1_all_out = {2: g.get_node(2), 3: g.get_node(3)}
+        self.assertDictEqual(node1_all_out,g.all_out_edges_of_node(1))
+        # print(g.all_out_edges_of_node(1))
+        # print(g.all_out_edges_of_node(2))
+        # print(g.all_out_edges_of_node(3))
+        # print(g.all_in_edges_of_node(1))
+        # print(g.all_in_edges_of_node(2))
+        # print(g.all_in_edges_of_node(3))
+
+    def test_remove_node_ESize(self):
+        """
+        verify that the node has been removed and all the edges he was connected with
+        also verify the ESize
+        this test will be preformed over a simple graph looks like:
+
+            1◄--►3
+            |   ▲
+            |  /
+            ▼ ▼
+             2
+        """
+        g = DiGraph()  # create a new graph
+        g.add_node(1)  # add two nodes to g
+        g.add_node(2)
+        g.add_node(3)
+        g.add_edge(1, 2, 12)
+        g.add_edge(1, 3, 13)
+        g.add_edge(2, 3, 23)
+        g.add_edge(3, 2, 32)
+        g.add_edge(3, 1, 31)
+        self.assertEqual(5, g.ESize)
+        g.remove_node(3)
+        self.assertEqual(1, g.ESize)
+        self.assertEqual(12, g.get_edge(1, 2).weight)  # verify that the only edge remaining is 1-->2 in weight of 12
+        self.assertEqual(None, g.get_edge(2, 1))
+        self.assertTrue(g.has_edge(1, 2))
+        self.assertFalse(g.has_edge(2, 1))
+        self.assertFalse(g.has_edge(3, 1))
+        self.assertFalse(g.has_edge(1, 3))
+        # print(g.all_out_edges_of_node(1))
+        # print(g.all_out_edges_of_node(2))
+        # print(g.all_out_edges_of_node(3))
+        # print(" ")
+        # print(g.all_in_edges_of_node(1))
+        # print(g.all_in_edges_of_node(2))
+        # print(g.all_in_edges_of_node(3))
+        # print(" ")
+        # g.remove_node(2)
+        # print(g.all_out_edges_of_node(1))
+        # print(g.all_out_edges_of_node(3))
+        # print(" ")
+        # print(g.all_in_edges_of_node(1))
+        # print(g.all_in_edges_of_node(3))
 
     def test_remove_edge(self):
         """
@@ -63,29 +133,6 @@ class TestDiGraph(unittest.TestCase):
         self.assertTrue(g.remove_edge(2, 1))  # remove the edge
         self.assertTrue(g.add_edge(2, 1, 1))  # the edge removed
 
-    def test_remove_node(self):
-        """
-        verify that the node has been removed and all the edges he was connected with
-        """
-        g = DiGraph()
-        g.add_node(1)
-        g.add_node(2)
-        g.add_edge(1, 2, 1)
-        # basic graph with two vertices
-        self.assertTrue(g.Nodes.__contains__(1))  # node 1 is in g
-        self.assertTrue(g.remove_node(1))  # remove node1
-        self.assertFalse(g.Nodes.__contains__(1))  # node 1 is not in g
-        self.assertFalse(g.has_edge(1, 2))  # there is no edge between (1,2)
-        self.assertFalse(g.remove_node(1))  # node 1 is not in g
-        self.assertTrue(g.add_node(1))  # add node 1 to g
-        self.assertTrue(g.add_edge(1, 2, 1))  # add the edge again
-        g.add_node(3)
-        g.add_edge(1, 3, 1)
-        self.assertTrue(g.remove_node(1))  # remove node 1
-        self.assertFalse(g.remove_node(1))  # node 1 already removed
-        self.assertFalse(g.has_edge(1, 3))  # there is no edge between (1,3)
-        self.assertFalse(g.has_edge(1, 2))  # there is no edge between (1,2)
-
     def test_v_size(self):
         """
         v_size return the correct number of vertices in the graph
@@ -93,7 +140,7 @@ class TestDiGraph(unittest.TestCase):
         g = DiGraph()
         g.add_node(1)
         g.add_node(2)
-        self.assertEqual(g.VSize, 2)  # there are two vertices in the graph
+        self.assertEqual(g.VSize, 2)
         g.remove_node(2)
         self.assertEqual(g.VSize, 1)  # node 2 has been removed
         g.remove_node(1)
@@ -168,39 +215,34 @@ class TestDiGraph(unittest.TestCase):
         g.remove_node(1)
         self.assertEqual(g.get_all_v(), {})
 
-    def test_all_in_edges_of_node(self):
-        """
-         verify that this method return all the nodes that has edge into this node
 
-        """
-        g = DiGraph()
-        g.add_node(1)
-        g.add_node(2)
-        self.assertEqual(g.all_in_edges_of_node(1), {})  # node 1 has no edge
-        g.add_edge(2, 1, 1)  # edge from 2 to 1
-        self.assertEqual(g.all_in_edges_of_node(1), {2: 1})
-        g.add_edge(1, 2, 5)
-        self.assertEqual(g.all_in_edges_of_node(1), {2: 1})
-        g.add_node(3)
-        g.add_edge(3, 1, 2)
-        self.assertEqual(g.all_in_edges_of_node(1), {2: 1, 3: 2})
-
-    def test_all_out_edges_of_node(self):
-        """
-        verify that this method return all the nodes that has edge from this node
-        """
-        g = DiGraph()
-        g.add_node(1)
-        g.add_node(2)
-        self.assertEqual(g.all_out_edges_of_node(1), {})  # node 1 has no edge
-        g.add_edge(1, 2, 1)  # edge from 2 to 1
-        self.assertEqual(g.all_out_edges_of_node(1), {2: 1})  # equal to {2:1}
-        g.add_edge(2, 1, 5)
-        self.assertEqual(g.all_out_edges_of_node(1), {2: 1})
-        g.add_node(3)
-        g.add_edge(1, 3, 2)
-        self.assertEqual(g.all_out_edges_of_node(1), {2: 1, 3: 2})
 
 
 if __name__ == '__main__':
-    unittest.main()
+     unittest.main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
