@@ -194,7 +194,7 @@ class TestDiGraph(unittest.TestCase):
         g.add_node(2)
         self.assertEqual(g.all_out_edges_of_node(1), {})  # node 1 has no edge
         g.add_edge(1, 2, 1)  # edge from 2 to 1
-        self.assertEqual(g.all_out_edges_of_node(1), {2: 1})  # equal to {2:1} 
+        self.assertEqual(g.all_out_edges_of_node(1), {2: 1})  # equal to {2:1}
         g.add_edge(2, 1, 5)
         self.assertEqual(g.all_out_edges_of_node(1), {2: 1})
         g.add_node(3)

@@ -20,11 +20,3 @@ class EdgeData:
 
     def __repr__(self):
         return f"Edge:src:[{self.src}],dest:[{self.dest}],weight:[{self.weight}]"
-
-if __name__ == '__main__':
-    e = EdgeData(1,2,0.5)
-    print(e)
-    e2 = EdgeData(4,2,2)
-    print(e2)
-    e3 = EdgeData(3,3,1)
-    print(e3)

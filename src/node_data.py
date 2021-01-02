@@ -32,11 +32,3 @@ class NodeData:
         else:
             return False
 
-
-if __name__ == '__main__':
-    n = NodeData(1)
-    print(n)
-    n2 = NodeData(2)
-    print(n2)
-    n3 = NodeData(3, pos=(12.3, 12.01, 0))
-    print(n3)
