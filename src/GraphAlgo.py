@@ -1,5 +1,6 @@
 import math
 from typing import List
+from collections import deque
 import heapq
 import json
 from src import GraphInterface
@@ -7,9 +8,11 @@ from src.DiGraph import DiGraph
 from src.edge_data import EdgeData
 from src.node_data import NodeData
 from src.GraphAlgoInterface import GraphAlgoInterface
+from src.DiGraph import DiGraph
 
 
 class GraphAlgo(GraphAlgoInterface):
+    staticNum = 0
     """
     This class represent directed weighted graph algorithms, it support basic methods like load and save from json file.
     it also support few algorithms like BFS and Dijkstra's  that used for methods like connected_component
@@ -51,11 +54,10 @@ class GraphAlgo(GraphAlgoInterface):
             with open(file_name, "r") as file:
                 my_graph = json.load(file)
                 for key, value in my_graph.items:
-                    print("visit")
-                    n = NodeData(key=key,**value)
+                    n = NodeData(**value)
                     g.add_node(n.key, n.pos)
-                    # e = EdgeData(**value)
-                    # g.add_edge(e.src, e.dest, e.weight)
+                    e = EdgeData(**value)
+                    g.add_edge(e.src, e.dest, e.weight)
 
                 loaded = True
         except IOError as ex:
@@ -104,9 +106,48 @@ class GraphAlgo(GraphAlgoInterface):
         return tuple(s_path)
 
     def connected_component(self, id1: int) -> list:
+        if self.Graph.get_node(id1) is None or self.Graph is None:
+            return None
+
+        stack = deque()
+        scc = {}
+        for key, value in self.Graph.get_all_v().items():
+            value.visited = False
+            value.w = -1
+            value.t = -1
+
+        for key, value in self.Graph.get_all_v().items():
+            if value.w == -1:
+                self.findSC(value, stack, scc, self.get_graph())
+
+        self.staticNum = 0
+        for key, value in scc.items():
+            for x in value:
+                if x.key == id1:
+                    return value
+
         pass
 
     def connected_components(self) -> List[list]:
+        if self.Graph is None:
+            return None
+
+        stack = deque()
+        scc = {}
+        for key, value in self.Graph.get_all_v().items():
+            value.visited = False
+            value.w = -1
+            value.t = -1
+
+        for key, value in self.Graph.get_all_v().items():
+            if value.w == -1:
+                self.findSC(value, stack, scc, self.get_graph())
+
+        self.staticNum = 0
+        TheList = []
+        for key, value in scc.items():
+            TheList.append(value)
+        return TheList
         pass
 
     def plot_graph(self) -> None:
@@ -126,7 +167,7 @@ class GraphAlgo(GraphAlgoInterface):
     # --------------------------- algorithms ------------------------ #
     def dijkstras(self, src: NodeData, dest: NodeData) -> list:
         """
-         dijkstras algorithm - https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+         Dijkstras algorithm - https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
         :param src: the source of the path
         :param dest:the destination of the path
@@ -160,4 +201,40 @@ class GraphAlgo(GraphAlgoInterface):
         dist_and_path[1] = short_path
         return dist_and_path
 
-    # -----------------auxiliary methods--------------------#
+    def findSC(self, vertex: NodeData, stack: deque(), hashmap: {}, graph: GraphInterface):
+        """
+        Trajan's algorithm - https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+
+        :param vertex: NodeData
+        :param stack: deque()
+        :param hashmap: dictionary
+        :param graph: DiGraph
+        :return: void
+        function will manipulate the given hashmap so that each value is a list of nodes in the same
+        strongly connected component represented by the key
+        """
+        stack.append(vertex)
+        vertex.visited = True
+        vertex.w = self.staticNum
+        vertex.t = self.staticNum
+        self.staticNum += 1
+        for key, curr_node in self.get_graph().all_out_edges_of_node(vertex.key).items():
+            if curr_node.w == -1:
+                self.findSC(curr_node, stack, hashmap, graph)
+                vertex.t = (min(vertex.t, curr_node.t))
+            elif curr_node.visited:
+                vertex.t = (min(vertex.t, curr_node.w))
+
+        tmp = -1
+        if vertex.t == vertex.w:
+            while tmp != vertex.key:
+                node = stack.pop()
+                tmp = node.key
+                if vertex.t not in hashmap:
+                    hashmap[vertex.t] = []
+                    hashmap[vertex.t].append(node)
+                else:
+                    hashmap[vertex.t].append(node)
+
+                node.visited = False
+

@@ -1,3 +1,4 @@
+import math
 class NodeData:
     """
     This class represent an Node(vertex) in the graph each Node has a unique key
@@ -15,6 +16,10 @@ class NodeData:
         self.info = info
         self.tag = tag
         self.pos = pos
+        # -------algorithms variable field-------
+        self.visited = False
+        self.w = -1
+        self.t = -1
 
     def __repr__(self):
         """
