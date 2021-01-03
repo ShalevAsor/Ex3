@@ -76,6 +76,40 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual((0, [1]), g_4.shortest_path(1, 1))  # shortest path from node to itself
         self.assertEqual((-1, []), g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
 
+    def test_SCC_algo(self):
+        """
+        this test will verify the functionality of connected_component/connected_components
+        functions and will be preformed over this graph:
+
+         1  ➡  2
+         ⬆  ↗  ⬇
+         4 ⬅  3
+
+         5 ➡  6
+            ↖ ⬇
+         8 ⬅ 7
+
+         therefore 3 strongly connected components are presented within this disconnected graph:
+         [8], [5,6,7], [1,2,3,4]
+
+        :return:
+        """
+        g = graph_creator(8)
+        g.get_graph().add_edge(1, 2, 5)
+        g.get_graph().add_edge(2, 3, 6)
+        g.get_graph().add_edge(3, 4, 7)
+        g.get_graph().add_edge(4, 1, 8)
+        g.get_graph().add_edge(4, 2, 8)
+        g.get_graph().add_edge(5, 6, 8)
+        g.get_graph().add_edge(6, 7, 8)
+        g.get_graph().add_edge(7, 5, 8)
+        g.get_graph().add_edge(7, 8, 8)
+        list1 = g.connected_component(6)  # the strongly connected list whom node 6 belongs to
+        list2 = g.connected_components()  # list of all the strongly connected components
+        print(list1)
+        print(list2)
+        list1manual = [5, 6, 7]
+        list2manual = [[8], [5, 6, 7], [1, 2, 3, 4]]
 
 
 if __name__ == '__main__':
