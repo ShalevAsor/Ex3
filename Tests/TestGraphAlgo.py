@@ -25,7 +25,10 @@ def graph_creator_with_edges(v_size: int, e_size: int) -> GraphAlgo:
     t = DiGraph()
     v, e = 1, 1
     while v <= v_size:
-        t.add_node(v)
+        x=random.uniform(0.1,35)
+        y=random.uniform(0.1,35)
+        position=(x,y,0)
+        t.add_node(v,pos=position)
         v += 1
     while e <= e_size:
         r_src = random.randint(1, v_size)
@@ -75,6 +78,18 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual((-1, []), g_4.shortest_path(1, 6))  # node 6 is not in the graph-there is no path
         self.assertEqual((0, [1]), g_4.shortest_path(1, 1))  # shortest path from node to itself
         self.assertEqual((-1, []), g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
+
+    def test_save_to_json(self):
+       g=graph_creator_with_edges(10,10)
+       #g=graph_creator(5)
+       # g.get_graph().add_edge(1,2,1)
+       # g.get_graph().add_edge(2,1,2)
+       # g.get_graph().add_edge(4,5,10)
+       self.assertTrue(g.save_to_json("random_graph"))
+       e=GraphAlgo()
+       self.assertTrue(e.load_from_json("random_graph"))
+
+
 
 
 

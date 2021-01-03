@@ -1,8 +1,10 @@
 import math
 from typing import List
 import heapq
-
+import json
 from src import GraphInterface
+from src.DiGraph import DiGraph
+from src.edge_data import EdgeData
 from src.node_data import NodeData
 from src.GraphAlgoInterface import GraphAlgoInterface
 
@@ -38,17 +40,41 @@ class GraphAlgo(GraphAlgoInterface):
 
     def get_graph(self) -> GraphInterface:
         """
-
         :return: the directed weighted graph that the GraphAlgo works on
         """
-
         return self.Graph
 
     def load_from_json(self, file_name: str) -> bool:
-        pass
+        loaded = False
+        g = DiGraph()
+        try:
+            with open(file_name, "r") as file:
+                my_graph = json.load(file)
+                for key, value in my_graph.items:
+                    print("visit")
+                    n = NodeData(key=key,**value)
+                    g.add_node(n.key, n.pos)
+                    # e = EdgeData(**value)
+                    # g.add_edge(e.src, e.dest, e.weight)
+
+                loaded = True
+        except IOError as ex:
+            print(ex)
+        finally:
+            self.Graph=g
+            return loaded
 
     def save_to_json(self, file_name: str) -> bool:
-        pass
+        saved = False
+        try:
+            with open(file_name, "w") as file:
+                json.dump(["Nodes:", self.Graph.Nodes, "Edges:", self.Graph.Edges], default=lambda o: o.__dict__,
+                          fp=file)
+                saved = True
+        except IOError as ex:
+            print(ex)
+        finally:
+            return saved
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         """
@@ -95,7 +121,7 @@ class GraphAlgo(GraphAlgoInterface):
             i += 1
 
     def __repr__(self):
-        return f"{self.Graph}"
+        return f"GraphAlgo:{self.Graph}"
 
     # --------------------------- algorithms ------------------------ #
     def dijkstras(self, src: NodeData, dest: NodeData) -> list:

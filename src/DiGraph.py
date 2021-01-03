@@ -2,6 +2,7 @@ from src.node_data import NodeData
 from src.edge_data import EdgeData
 from src.GraphInterface import GraphInterface
 
+
 class DiGraph(GraphInterface):
 
     def __init__(self):
@@ -55,7 +56,7 @@ class DiGraph(GraphInterface):
             return False
         else:
             e = EdgeData(id1, id2, weight)
-            self.Edges[id1][id2] = e                     # quick access to edges
+            self.Edges[id1][id2] = e  # quick access to edges
             self.src_to_dest[id1][id2] = self.get_node(id2)  # add to list id1-->id2
             self.dest_to_src[id2][id1] = self.get_node(id1)  # add to list id2<--id1
             self.ESize += 1
@@ -70,15 +71,15 @@ class DiGraph(GraphInterface):
         :return: true if the node successfully added to the graph, else return flase
         """
         ans = False
-        if node_id in self.Nodes:                  # if the node already in the graph return false
+        if node_id in self.Nodes:  # if the node already in the graph return false
             return ans
         else:
             new_node = NodeData(node_id, pos=pos)  # create a new node
-            self.Nodes[node_id] = new_node         # add the node to the graph
-            self.src_to_dest[node_id] = {}         # init new dictionary
-            self.dest_to_src[node_id] = {}         # init new dictionary
-            self.Edges[node_id] = {}            # init new dictionary
-            self.VSize += 1                        # increase the node size by 1
+            self.Nodes[node_id] = new_node  # add the node to the graph
+            self.src_to_dest[node_id] = {}  # init new dictionary
+            self.dest_to_src[node_id] = {}  # init new dictionary
+            self.Edges[node_id] = {}  # init new dictionary
+            self.VSize += 1  # increase the node size by 1
             self.MC += 1
             ans = True
         return ans
@@ -105,7 +106,7 @@ class DiGraph(GraphInterface):
             self.src_to_dest.pop(node_id)
             self.dest_to_src.pop(node_id)
             self.MC += 1
-            self.VSize -= 1;
+            self.VSize -= 1
             return True
 
     def remove_edge(self, node_id1: int, node_id2: int) -> bool:
@@ -202,4 +203,3 @@ class DiGraph(GraphInterface):
         :return: string represents the graph
         """
         return f"DiGraph[Nodes:{self.Nodes},Edges:{self.Edges},Edge_size:{self.ESize},Node_size:{self.VSize}]"
-
