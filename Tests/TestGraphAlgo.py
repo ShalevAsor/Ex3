@@ -123,8 +123,8 @@ class MyTestCase(unittest.TestCase):
         list1 = g.connected_component(6)  # the strongly connected list whom node 6 belongs to
         list2 = g.connected_components()  # list of all the strongly connected components
         list1manual = [NodeData(7), NodeData(6), NodeData(5)]
-        self.assertEqual(list1,list1manual)
-        self.assertEqual(list2,[[NodeData(4),NodeData(3),NodeData(2),NodeData(1)],[NodeData(8)],list1manual])
+        self.assertEqual(list1, list1manual)
+        self.assertEqual(list2, [[NodeData(4), NodeData(3), NodeData(2), NodeData(1)], [NodeData(8)], list1manual])
 
 
 

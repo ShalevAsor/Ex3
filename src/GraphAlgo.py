@@ -9,6 +9,9 @@ from src.edge_data import EdgeData
 from src.node_data import NodeData
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
+from random import randint
+from matplotlib.patches import ConnectionPatch
+import matplotlib.pyplot as plt
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -78,7 +81,7 @@ class GraphAlgo(GraphAlgoInterface):
         finally:
             return saved
 
-    def shortest_path(self, id1: int, id2: int) -> (float, list):
+    def shortest_path(self, id1: int, id2: int) -> (float, list): # TODO: make sure that return value structure is correct
         """
           return list represent the shortest path from the source vertex to the destination vertex
          src--->node1---->node2----->...----->dest
@@ -151,6 +154,63 @@ class GraphAlgo(GraphAlgoInterface):
         pass
 
     def plot_graph(self) -> None:
+        # data members
+        g = self.get_graph()
+        positionOfNodes = {}
+        nodes_list = g.get_all_v().values()
+        edges_list = list()
+
+        x_max = 0
+        y_max = 0
+        for node in nodes_list:
+            if node.get_x() > x_max:
+                x_max = node.get_x()
+            if node.get_y() > y_max:
+                y_max = node.get_y()
+            if node.pos is None:
+                if x_max is 0 and y_max is 0:
+                    x_max = randint(0, 5)
+                    y_max = randint(0, 5)
+                node.pos = (randint(0, x_max), randint(0, y_max), 0)
+            #  add node position x,y values in two lists
+            positionOfNodes[node.key] = [node.get_x(), node.get_y()]
+            #  visit each node's neighbor to track all edges
+            curr_node_neighbors = g.all_out_edges_of_node(node.key).values()
+            for neigh_node in curr_node_neighbors:
+                #  insert each edge as (src,dest) tuple in the list
+                edges_list.append((node.key, neigh_node.key))
+        # print(edges_list)
+
+        # plot for the nodes and their annotation
+        fig, ax1 = plt.subplots()
+        for node, value in positionOfNodes.items():
+            ax1.scatter(value[0], value[1], facecolor='c', s=100, c="c", alpha=0.4, marker='*',
+                        label='$node%i$' % node + ' $pos(%i$' % value[0] + '$,%i$' % value[1] + ')')
+            ax1.annotate(node, (value[0], value[1]))
+
+        # creating arrows for each edge by iterating the edges_list
+        coordsA = "data"
+        coordsB = "data"
+        for edge in edges_list:
+            node_src = g.get_node(edge[0])
+            node_dest = g.get_node(edge[1])
+            xyA = (node_src.get_x(), node_src.get_y())
+            xyB = (node_dest.get_x(), node_dest.get_y())
+            con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
+                                  arrowstyle="-|>", shrinkA=10, shrinkB=9,
+                                  mutation_scale=20, fc="k")
+            ax1.add_artist(con)
+
+        plt.title('Directed_Weighted_Graph')
+        # plt.axis('equal')
+        box = ax1.get_position()
+        ax1.set_position([box.x0, box.y0, box.width * 0.77, box.height])
+
+        # Put a legend to the right of the current axis
+        ax1.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.show()
         pass
 
     def get_sub_node(self, path: list, key: int) -> SubNode:
