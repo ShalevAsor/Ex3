@@ -5,7 +5,7 @@ from src.GraphInterface import GraphInterface
 
 class DiGraph(GraphInterface):
 
-    def __init__(self,Nodes={},Edges={}):
+    def __init__(self):
         self.Nodes = {}
         self.Edges = {}  # Quick access to edges aka. get(src).get(dest)->Edge
         self.src_to_dest = {}  # key: node id,  value: dictionary of nodes whom this node id point towards.
