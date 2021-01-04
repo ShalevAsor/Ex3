@@ -12,7 +12,7 @@ class NodeData:
         :param tag: tag of the node (usually used for algorithms)
         :param pos: 3D point represents the node position
         """
-        self.key = key
+        self.id = key
         self.info = info
         self.tag = tag
         self.pos = pos

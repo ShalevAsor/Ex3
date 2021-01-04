@@ -56,11 +56,12 @@ class GraphAlgo(GraphAlgoInterface):
         try:
             with open(file_name, "r") as file:
                 my_graph = json.load(file)
-                for key, value in my_graph.items:
-                    n = NodeData(**value)
-                    g.add_node(n.key, n.pos)
-                    e = EdgeData(**value)
-                    g.add_edge(e.src, e.dest, e.weight)
+                list_of_nodes=my_graph["Nodes"]
+                list_of_edges=my_graph["Edges"]
+                for k in list_of_nodes:
+                    g.add_node(k["id"],k["pos"])
+                for k in list_of_edges:
+                    g.add_edge(k["src"], k["dest"], k["w"])
 
                 loaded = True
         except IOError as ex:
@@ -73,7 +74,9 @@ class GraphAlgo(GraphAlgoInterface):
         saved = False
         try:
             with open(file_name, "w") as file:
-                json.dump(["Nodes:", self.Graph.Nodes, "Edges:", self.Graph.Edges], default=lambda o: o.__dict__,
+                # json.dump(["Nodes", self.Graph.Nodes, "Edges", self.Graph.Edges], default=lambda o: o.__dict__,
+                #           fp=file)
+                json.dump( self.Graph, default=lambda o: o.__dict__,
                           fp=file)
                 saved = True
         except IOError as ex:
