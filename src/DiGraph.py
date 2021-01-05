@@ -50,7 +50,7 @@ class DiGraph(GraphInterface):
         """
         if weight < 0 or id1 == id2:
             return False
-        elif id1 not in self.Nodes or id2 not in self.Nodes:
+        elif id1 not in self.Nodes or id2 not in self.Nodes:  # if either of nodes not in the graph
             return False
         elif id2 in self.Edges.get(id1):  # Edge exist already
             return False
