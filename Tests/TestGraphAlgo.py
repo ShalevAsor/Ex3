@@ -89,8 +89,10 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(g.save_to_json("random_graph"))
         e = GraphAlgo()
         #self.assertTrue(e.load_from_json("../data/A5"))
+        #print(e.shortest_path(1,6))
         self.assertTrue(e.load_from_json("random_graph"))
-        print(e.shortest_path(1,6))
+        print(e)
+
 
 
     def test_SCC_algo(self):

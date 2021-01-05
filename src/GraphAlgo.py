@@ -53,10 +53,19 @@ class GraphAlgo(GraphAlgoInterface):
         try:
             with open(file_name, "r") as file:
                 my_graph = json.load(file)
-                list_of_nodes=my_graph["Nodes"]
-                list_of_edges=my_graph["Edges"]
+                list_of_nodes = my_graph["Nodes"]
+                list_of_edges = my_graph["Edges"]
+
+                try:
+
+                    for t,u in my_graph.items():
+                        if t=='Nodes' :
+                            g.add_node(u['key'],u['pos'])
+
+                except IOError as e:
+                    print(e)
                 for k in list_of_nodes:
-                    g.add_node(k["id"],k["pos"])
+                    g.add_node(k["id"], k["pos"])
                 for k in list_of_edges:
                     g.add_edge(k["src"], k["dest"], k["w"])
 
@@ -64,16 +73,17 @@ class GraphAlgo(GraphAlgoInterface):
         except IOError as ex:
             print(ex)
         finally:
-            self.Graph=g
+            self.Graph = g
+            #print(g)
             return loaded
 
     def save_to_json(self, file_name: str) -> bool:
         saved = False
         try:
             with open(file_name, "w") as file:
-                # json.dump(["Nodes", self.Graph.Nodes, "Edges", self.Graph.Edges], default=lambda o: o.__dict__,
+                # json.dump(self.get_graph(), default=lambda o: o.__dict__,
                 #           fp=file)
-                json.dump( self.Graph, default=lambda o: o.__dict__,
+                json.dump(self.Graph, default=lambda o: o.__dict__,
                           fp=file)
                 saved = True
         except IOError as ex:
@@ -240,4 +250,3 @@ class GraphAlgo(GraphAlgoInterface):
                     hashmap[vertex.t].append(node)
 
                 node.visited = False
-
