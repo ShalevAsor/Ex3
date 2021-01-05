@@ -9,8 +9,8 @@
 .idea/**/shelf
 WGraph_AlgoTest2.java
 WGraph_DSTest2.java
-myGraph
-g0
+__pycache__
+.pyc
 plot_demo.py
 Ex2.iml
 .idea
