@@ -247,7 +247,6 @@ class GraphAlgo(GraphAlgoInterface):
     def dijkstras(self, src: NodeData, dest: NodeData) -> list:
         """
          Dijkstras algorithm - https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-
         :param src: the source of the path
         :param dest:the destination of the path
         :return: list of weight and  path
@@ -283,7 +282,6 @@ class GraphAlgo(GraphAlgoInterface):
     def findSC(self, vertex: NodeData, stack: deque(), hashmap: {}, graph: GraphInterface):
         """
         Trajan's algorithm - https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
-
         :param vertex: NodeData
         :param stack: deque()
         :param hashmap: dictionary
@@ -315,5 +313,9 @@ class GraphAlgo(GraphAlgoInterface):
                 else:
                     hashmap[vertex.t].append(node)
 
+<<<<<<< HEAD
                 node.visited = False
 
+=======
+                node.visited = False
+>>>>>>> 73ac8ee4774413fadf7d388bea9d393299db36b5

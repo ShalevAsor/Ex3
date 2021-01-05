@@ -93,24 +93,18 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(e.load_from_json("random_graph"))
         print(e)
 
-
-
     def test_SCC_algo(self):
         """
         this test will verify the functionality of connected_component/connected_components
         functions and will be preformed over this graph:
-
          1  ➡  2
          ⬆  ↗  ⬇
          4 ⬅  3
-
          5 ➡  6
             ↖ ⬇
          8 ⬅ 7
-
          therefore 3 strongly connected components are presented within this disconnected graph:
          [8], [5,6,7], [1,2,3,4]
-
         :return:
         """
         g = graph_creator(8)
@@ -128,7 +122,6 @@ class MyTestCase(unittest.TestCase):
         list1manual = [NodeData(7), NodeData(6), NodeData(5)]
         self.assertEqual(list1, list1manual)
         self.assertEqual(list2, [[NodeData(4), NodeData(3), NodeData(2), NodeData(1)], [NodeData(8)], list1manual])
-
 
 
 if __name__ == '__main__':
