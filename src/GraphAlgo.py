@@ -179,7 +179,6 @@ class GraphAlgo(GraphAlgoInterface):
         positionOfNodes = {}
         nodes_list = self.Graph.get_all_v().values()
         edges_list = list()
-
         x_max = 0
         y_max = 0
         history = {}
@@ -188,13 +187,23 @@ class GraphAlgo(GraphAlgoInterface):
                 x_max = node.get_x()
             if node.get_y() > y_max:
                 y_max = node.get_y()
+
+        for node in nodes_list:
             if node.pos is None:  # take care of a case where node dont have position
-                if x_max == 0 and y_max == 0:  # takes care of a case where the node without position is 1st node
-                    x_max = randint(5, 15)
-                    y_max = randint(5, 15)
-                node.pos = (randint(0, x_max), randint(0, y_max), 0)
+                if x_max == 0 and y_max == 0:  # in case all nodes without position we pick a arena in size of nodes*7
+                    x_max = randint(0, len(nodes_list)*7)
+                    y_max = randint(0, len(nodes_list)*7)
+                x_final = x_max
+                y_final = y_max
+                while x_final in history.keys():  # in case of duplicate generated pos,
+                    x_final = randint(0, x_max)   # we randomize until we get a new one,
+                    y_final = randint(0, y_max)   # therefore time complexity increases but
+                node.pos = (x_final, y_final, 0)  # graph will look more elegant
+
+
             #  add node position x,y values in two lists
             positionOfNodes[node.key] = [node.get_x(), node.get_y()]
+            history[node.get_x()] = node.get_y()
             #  visit each node's neighbor to track all edges
             curr_node_neighbors = self.Graph.all_out_edges_of_node(node.key).values()
             for neigh_node in curr_node_neighbors:
@@ -313,9 +322,5 @@ class GraphAlgo(GraphAlgoInterface):
                 else:
                     hashmap[vertex.t].append(node)
 
-<<<<<<< HEAD
-                node.visited = False
 
-=======
                 node.visited = False
->>>>>>> 73ac8ee4774413fadf7d388bea9d393299db36b5

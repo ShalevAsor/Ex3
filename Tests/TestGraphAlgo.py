@@ -123,6 +123,35 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(list1, list1manual)
         self.assertEqual(list2, [[NodeData(4), NodeData(3), NodeData(2), NodeData(1)], [NodeData(8)], list1manual])
 
+    def test_graph_plot(self):
+        """
+        in this test i will verify that the plot works for graphs with nodes
+        that has position value as well as for nodes without.
+        Returns
+        -------
+        """
+        g = DiGraph()
+
+        g.add_node(1, (2, 7, 0))
+        g.add_node(2, (7, 7, 0))
+        g.add_node(3, (7, 2, 0))
+        g.add_node(4, (2, 2, 0))
+        g.add_edge(1, 2, 1)
+        g.add_edge(2, 3, 1)
+        g.add_edge(3, 4, 1)
+        g.add_edge(4, 1, 1)
+        g.add_edge(3, 1, 1)
+        g.add_edge(1, 3, 1)
+        ga = GraphAlgo(g)
+        ga.plot_graph()  # plot in case of nodes with position
+        g.add_node(5)
+        g.add_node(6)
+        g.add_node(7)
+        g.add_edge(5, 6, 1)
+        g.add_edge(6, 7, 1)
+        g.add_edge(7, 5, 1)
+        ga.plot_graph()  # plot in case of nodes without position
+
 
 if __name__ == '__main__':
     unittest.main()
