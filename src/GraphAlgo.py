@@ -9,6 +9,10 @@ from src.edge_data import EdgeData
 from src.node_data import NodeData
 from src.GraphAlgoInterface import GraphAlgoInterface
 from src.DiGraph import DiGraph
+from src.AbstractGraph import AbstractGraph as AG
+from random import randint
+from matplotlib.patches import ConnectionPatch
+import matplotlib.pyplot as plt
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -55,19 +59,16 @@ class GraphAlgo(GraphAlgoInterface):
                 my_graph = json.load(file)
                 list_of_nodes = my_graph["Nodes"]
                 list_of_edges = my_graph["Edges"]
-
                 try:
-
-                    for t, u in my_graph.items():
-                        if t == 'Nodes':
-                            g.add_node(u['1']['key'], pos=tuple(u['1']['pos']))
-
-                except IOError as e:
-                    print(e)
-                for k in list_of_nodes:
-                    g.add_node(k["id"], k["pos"])
-                for k in list_of_edges:
-                    g.add_edge(k["src"], k["dest"], k["w"])
+                    for k in list_of_nodes:
+                        g.add_node(k["id"], k["pos"])
+                    for k in list_of_edges:
+                        g.add_edge(k["src"], k["dest"], k["w"])
+                except Exception:
+                    for k in list_of_nodes:
+                        g.add_node(k["key"], k["pos"])
+                    for k in list_of_edges:
+                        g.add_edge(k["src"], k["dest"], k["weight"])
 
                 loaded = True
         except IOError as ex:
@@ -79,14 +80,18 @@ class GraphAlgo(GraphAlgoInterface):
 
     def save_to_json(self, file_name: str) -> bool:
         saved = False
-        #print(list(self.Graph.get_all_v().values()))
-        list_of_nodes=list(self.Graph.get_all_v().values())
-        list_of_edges=list()
+        Edges = []
+        Nodes = list(self.get_graph().get_all_v().values())
+        for node in Nodes:
+            curr_node_neighbors = self.get_graph().all_out_edges_of_node(node.key)
+            for neigh_node in curr_node_neighbors:
+                Edges.append(self.get_graph().get_edge(node.key, neigh_node))
+        graphobj = AG(Nodes, Edges)
         try:
             with open(file_name, "w") as file:
                 # json.dump(self.get_graph(), default=lambda o: o.__dict__,
                 #           fp=file)
-                json.dump(list_of_nodes, default=lambda o: o.__dict__,
+                json.dump(graphobj, default=lambda o: o.__dict__,
                           fp=file)
                 saved = True
         except IOError as ex:
@@ -167,7 +172,62 @@ class GraphAlgo(GraphAlgoInterface):
         pass
 
     def plot_graph(self) -> None:
-        pass
+        # data members
+        positionOfNodes = {}
+        nodes_list = self.Graph.get_all_v().values()
+        edges_list = list()
+
+        x_max = 0
+        y_max = 0
+        for node in nodes_list:
+            if node.get_x() > x_max:
+                x_max = node.get_x()
+            if node.get_y() > y_max:
+                y_max = node.get_y()
+            if node.pos is None:  # take care of a case where node dont have position
+                if x_max == 0 and y_max == 0:  # takes care of a case where the node without position is 1st node
+                    x_max = randint(0, 5)
+                    y_max = randint(0, 5)
+                node.pos = (randint(0, x_max), randint(0, y_max), 0)
+            #  add node position x,y values in two lists
+            positionOfNodes[node.key] = [node.get_x(), node.get_y()]
+            #  visit each node's neighbor to track all edges
+            curr_node_neighbors = self.Graph.all_out_edges_of_node(node.key).values()
+            for neigh_node in curr_node_neighbors:
+                #  insert each edge as (src,dest) tuple in the list
+                edges_list.append((node.key, neigh_node.key))
+        # print(edges_list)
+
+        # plot for the nodes and their annotation
+        fig, ax1 = plt.subplots()
+        for node, value in positionOfNodes.items():
+            ax1.scatter(value[0], value[1], facecolor='c', s=100, c="c", alpha=0.4, marker='*',
+                        label='$node%i$' % node + ' $pos(%i$' % value[0] + '$,%i$' % value[1] + ')')
+            ax1.annotate(node, (value[0], value[1]))
+
+        # creating arrows for each edge by iterating the edges_list
+        coordsA = "data"
+        coordsB = "data"
+        for edge in edges_list:
+            node_src = self.Graph.get_node(edge[0])
+            node_dest = self.Graph.get_node(edge[1])
+            xyA = (node_src.get_x(), node_src.get_y())
+            xyB = (node_dest.get_x(), node_dest.get_y())
+            con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
+                                  arrowstyle="-|>", shrinkA=10, shrinkB=9,
+                                  mutation_scale=20, fc="k")
+            ax1.add_artist(con)
+
+        plt.title('Directed_Weighted_Graph')
+        # plt.axis('equal')
+        box = ax1.get_position()
+        ax1.set_position([box.x0, box.y0, box.width * 0.77, box.height])
+
+        # Put a legend to the right of the current axis
+        ax1.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.show()
 
     def get_sub_node(self, path: list, key: int) -> SubNode:
         i = 0
@@ -184,7 +244,6 @@ class GraphAlgo(GraphAlgoInterface):
     def dijkstras(self, src: NodeData, dest: NodeData) -> list:
         """
          Dijkstras algorithm - https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-
         :param src: the source of the path
         :param dest:the destination of the path
         :return: list of weight and  path
@@ -220,7 +279,6 @@ class GraphAlgo(GraphAlgoInterface):
     def findSC(self, vertex: NodeData, stack: deque(), hashmap: {}, graph: GraphInterface):
         """
         Trajan's algorithm - https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
-
         :param vertex: NodeData
         :param stack: deque()
         :param hashmap: dictionary

@@ -1,4 +1,6 @@
 import math
+
+
 class NodeData:
     """
     This class represent an Node(vertex) in the graph each Node has a unique key

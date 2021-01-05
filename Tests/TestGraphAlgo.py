@@ -88,27 +88,23 @@ class MyTestCase(unittest.TestCase):
         # g.get_graph().add_edge(4,5,10)
         self.assertTrue(g.save_to_json("random_graph"))
         e = GraphAlgo()
-        # self.assertTrue(e.load_from_json("../data/A5"))
-        # print(e.shortest_path(1,6))
-        #self.assertTrue(e.load_from_json("random_graph"))
-        #print(e)
+        self.assertTrue(e.load_from_json("../data/T0.json"))
+        print(e.shortest_path(1, 6))
+        self.assertTrue(e.load_from_json("random_graph"))
+        print(e)
 
     def test_SCC_algo(self):
         """
         this test will verify the functionality of connected_component/connected_components
         functions and will be preformed over this graph:
-
          1  ➡  2
          ⬆  ↗  ⬇
          4 ⬅  3
-
          5 ➡  6
             ↖ ⬇
          8 ⬅ 7
-
          therefore 3 strongly connected components are presented within this disconnected graph:
          [8], [5,6,7], [1,2,3,4]
-
         :return:
         """
         g = graph_creator(8)

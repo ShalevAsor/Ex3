@@ -2,6 +2,7 @@ import unittest
 from src.DiGraph import DiGraph
 from src.node_data import NodeData
 
+
 class MyTestCase(unittest.TestCase):
 
     def test_add_node(self):
@@ -17,7 +18,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(3, g.get_node(3).key)
         self.assertEqual(4, g.get_node(4).key)
         self.assertEqual(None, g.get_node(5))  # verify return None value when ordering un-existing node
-        self.assertFalse(g.add_node(0))        # verify that cant add same node
+        self.assertFalse(g.add_node(0))  # verify that cant add same node
         self.assertTrue(g.add_node(5, pos=(12, 11.3, 0)))  # add new node with pos
         self.assertTrue(g.Nodes.__contains__(5))  # g contains the node above
         self.assertEqual(g.Nodes.get(5).pos, (12, 11.3, 0))  # the node pos are equals
@@ -62,7 +63,7 @@ class MyTestCase(unittest.TestCase):
         g.add_edge(1, 3, 13)
         g.add_edge(2, 3, 23)
         node1_all_out = {2: g.get_node(2), 3: g.get_node(3)}
-        self.assertDictEqual(node1_all_out,g.all_out_edges_of_node(1))
+        self.assertDictEqual(node1_all_out, g.all_out_edges_of_node(1))
         # print(g.all_out_edges_of_node(1))
         # print(g.all_out_edges_of_node(2))
         # print(g.all_out_edges_of_node(3))
@@ -216,33 +217,5 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(g.get_all_v(), {})
 
 
-
-
 if __name__ == '__main__':
-     unittest.main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    unittest.main()
