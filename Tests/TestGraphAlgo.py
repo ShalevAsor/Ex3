@@ -80,18 +80,29 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual((0, [1]), g_4.shortest_path(1, 1))  # shortest path from node to itself
         self.assertEqual((-1, []), g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
 
-    def test_save_to_json(self):
-        g = graph_creator_with_edges(3, 3)
-        # g=graph_creator(5)
-        # g.get_graph().add_edge(1,2,1)
-        # g.get_graph().add_edge(2,1,2)
-        # g.get_graph().add_edge(4,5,10)
-        self.assertTrue(g.save_to_json("random_graph"))
+    def test_save_and_load(self):
+        """
+        This test 1) compare if the graph that saved is equal to the other graph that load from him
+                  2) save and load empty graphs
+                  3) save and load large graphs
+                  4) load json from data to graph object
+
+        """
+        file_name="random_graph"
+        g = graph_creator_with_edges(10, 10) # create random graph with 10 nodes and edges
+        self.assertTrue(g.save_to_json(file_name)) # save that graph
         e = GraphAlgo()
-        self.assertTrue(e.load_from_json("../data/A0"))
-        print(e.shortest_path(1, 6))
-        self.assertTrue(e.load_from_json("random_graph"))
-        print(e)
+        self.assertTrue(e.load_from_json(file_name)) # load the saved graph
+        self.assertEqual(e,g) # e and g are equals
+        self.assertTrue(e.load_from_json("../data/A5")) # json from data
+        self.assertTrue(e.load_from_json(file_name))
+        self.assertEqual(e,g) # e and g are equals
+        empty_graph = GraphAlgo()
+        self.assertTrue(empty_graph.save_to_json("empty_graph")) # save and load empty graph
+        self.assertTrue(empty_graph.load_from_json("empty_graph"))
+        large_graph=graph_creator_with_edges(100000,10000)
+        self.assertTrue(large_graph.save_to_json("large graph")) # save and load large graph
+        self.assertTrue(large_graph.load_from_json("large graph"))
 
     def test_SCC_algo(self):
         """
@@ -151,6 +162,7 @@ class MyTestCase(unittest.TestCase):
         g.add_edge(6, 7, 1)
         g.add_edge(7, 5, 1)
         ga.plot_graph()  # plot in case of nodes without position
+
 
 
 if __name__ == '__main__':

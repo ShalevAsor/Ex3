@@ -57,8 +57,15 @@ class GraphAlgo(GraphAlgoInterface):
         try:
             with open(file_name, "r") as file:
                 my_graph = json.load(file)
+                # empty graph case:
+                if my_graph is None:
+                    g=DiGraph()
+                    self.Graph=g
+                    loaded=True
+                    return True
                 list_of_nodes = my_graph["Nodes"]
                 list_of_edges = my_graph["Edges"]
+
                 try:
                     for k in list_of_nodes:
                         if "pos" in my_graph:
@@ -84,23 +91,34 @@ class GraphAlgo(GraphAlgoInterface):
     def save_to_json(self, file_name: str) -> bool:
         saved = False
         Edges = []
-        Nodes = list(self.get_graph().get_all_v().values())
-        for node in Nodes:
-            curr_node_neighbors = self.get_graph().all_out_edges_of_node(node.key)
-            for neigh_node in curr_node_neighbors:
-                Edges.append(self.get_graph().get_edge(node.key, neigh_node))
-        graphobj = AG(Nodes, Edges)
-        try:
-            with open(file_name, "w") as file:
-                # json.dump(self.get_graph(), default=lambda o: o.__dict__,
-                #           fp=file)
-                json.dump(graphobj, default=lambda o: o.__dict__,
-                          fp=file)
-                saved = True
-        except IOError as ex:
-            print(ex)
-        finally:
+        if self.get_graph() is None:
+            try:
+                with open(file_name, "w") as file:
+                    json.dump(self.get_graph(),fp=file)
+                    saved = True
+            except IOError as ex:
+                print(ex)
             return saved
+        else:
+            Nodes = list(self.get_graph().get_all_v().values())
+            for node in Nodes:
+                curr_node_neighbors = self.get_graph().all_out_edges_of_node(node.key)
+                for neigh_node in curr_node_neighbors:
+                    Edges.append(self.get_graph().get_edge(node.key, neigh_node))
+            graphobj = AG(Nodes, Edges)
+            try:
+                with open(file_name, "w") as file:
+                    # json.dump(self.get_graph(), default=lambda o: o.__dict__,
+                    #           fp=file)
+                    json.dump(graphobj, default=lambda o: o.__dict__,
+                              fp=file)
+                    saved = True
+            except IOError as ex:
+                print(ex)
+            finally:
+                return saved
+
+
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         """
@@ -248,6 +266,13 @@ class GraphAlgo(GraphAlgoInterface):
             if path[i].current_key == key:
                 return path[i]
             i += 1
+
+    def __eq__(self, o: GraphInterface) -> bool:
+        if self is o : return True
+        return self.Graph.__eq__(o.Graph)
+
+
+
 
     def __repr__(self):
         return f"GraphAlgo:{self.Graph}"

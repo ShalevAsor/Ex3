@@ -197,6 +197,20 @@ class DiGraph(GraphInterface):
         """
         return hash((node_id1, node_id2))
 
+    def __eq__(self, o: object) -> bool:
+        #super.__eq__()
+        for key in self.Nodes:
+            if key not in o.Nodes:
+                return False
+        return True
+
+
+
+
+
+
+
+
     def __repr__(self):
         """
          basic string format represents the graph
