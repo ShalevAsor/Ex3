@@ -58,9 +58,9 @@ class GraphAlgo(GraphAlgoInterface):
 
                 try:
 
-                    for t,u in my_graph.items():
-                        if t=='Nodes' :
-                            g.add_node(u['key'],u['pos'])
+                    for t, u in my_graph.items():
+                        if t == 'Nodes':
+                            g.add_node(u['1']['key'], pos=tuple(u['1']['pos']))
 
                 except IOError as e:
                     print(e)
@@ -74,16 +74,19 @@ class GraphAlgo(GraphAlgoInterface):
             print(ex)
         finally:
             self.Graph = g
-            #print(g)
+            # print(g)
             return loaded
 
     def save_to_json(self, file_name: str) -> bool:
         saved = False
+        #print(list(self.Graph.get_all_v().values()))
+        list_of_nodes=list(self.Graph.get_all_v().values())
+        list_of_edges=list()
         try:
             with open(file_name, "w") as file:
                 # json.dump(self.get_graph(), default=lambda o: o.__dict__,
                 #           fp=file)
-                json.dump(self.Graph, default=lambda o: o.__dict__,
+                json.dump(list_of_nodes, default=lambda o: o.__dict__,
                           fp=file)
                 saved = True
         except IOError as ex:

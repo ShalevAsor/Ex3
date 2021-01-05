@@ -80,20 +80,18 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual((0, [1]), g_4.shortest_path(1, 1))  # shortest path from node to itself
         self.assertEqual((-1, []), g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
 
-    # def test_save_to_json(self):
-    #     g = graph_creator_with_edges(3, 3)
-    #     # g=graph_creator(5)
-    #     # g.get_graph().add_edge(1,2,1)
-    #     # g.get_graph().add_edge(2,1,2)
-    #     # g.get_graph().add_edge(4,5,10)
-    #     self.assertTrue(g.save_to_json("random_graph"))
-    #     e = GraphAlgo()
-    #     #self.assertTrue(e.load_from_json("../data/A5"))
-    #     #print(e.shortest_path(1,6))
-    #     self.assertTrue(e.load_from_json("random_graph"))
-    #     print(e)
-
-
+    def test_save_to_json(self):
+        g = graph_creator_with_edges(3, 3)
+        # g=graph_creator(5)
+        # g.get_graph().add_edge(1,2,1)
+        # g.get_graph().add_edge(2,1,2)
+        # g.get_graph().add_edge(4,5,10)
+        self.assertTrue(g.save_to_json("random_graph"))
+        e = GraphAlgo()
+        # self.assertTrue(e.load_from_json("../data/A5"))
+        # print(e.shortest_path(1,6))
+        #self.assertTrue(e.load_from_json("random_graph"))
+        #print(e)
 
     def test_SCC_algo(self):
         """
@@ -128,7 +126,6 @@ class MyTestCase(unittest.TestCase):
         list1manual = [NodeData(7), NodeData(6), NodeData(5)]
         self.assertEqual(list1, list1manual)
         self.assertEqual(list2, [[NodeData(4), NodeData(3), NodeData(2), NodeData(1)], [NodeData(8)], list1manual])
-
 
 
 if __name__ == '__main__':
