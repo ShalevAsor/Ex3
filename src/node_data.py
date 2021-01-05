@@ -21,12 +21,22 @@ class NodeData:
         self.w = -1
         self.t = -1
 
+    def get_x(self) -> float:
+        if self.pos is not None:
+            return self.pos[0]
+        return -1
+
+    def get_y(self) -> float:
+        if self.pos is not None:
+            return self.pos[1]
+        return -1
+
     def __repr__(self):
         """
         print basic information about this node
         :return: String with the node key and position
         """
-        return f"Node {self.key}:pos:{self.pos}"
+        return f"Node:{self.key} pos:{self.pos}"
 
     def __eq__(self, o: object) -> bool:
         if self is o: return True
