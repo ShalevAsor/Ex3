@@ -88,7 +88,7 @@ class MyTestCase(unittest.TestCase):
         # g.get_graph().add_edge(4,5,10)
         self.assertTrue(g.save_to_json("random_graph"))
         e = GraphAlgo()
-        self.assertTrue(e.load_from_json("../data/T0.json"))
+        self.assertTrue(e.load_from_json("../data/A0"))
         print(e.shortest_path(1, 6))
         self.assertTrue(e.load_from_json("random_graph"))
         print(e)
