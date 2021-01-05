@@ -61,7 +61,10 @@ class GraphAlgo(GraphAlgoInterface):
                 list_of_edges = my_graph["Edges"]
                 try:
                     for k in list_of_nodes:
-                        g.add_node(k["id"], k["pos"])
+                        if "pos" in my_graph:
+                            g.add_node(k["id"], k["pos"])
+                        else:
+                            g.add_node(k["id"])
                     for k in list_of_edges:
                         g.add_edge(k["src"], k["dest"], k["w"])
                 except Exception:
@@ -179,6 +182,7 @@ class GraphAlgo(GraphAlgoInterface):
 
         x_max = 0
         y_max = 0
+        history = {}
         for node in nodes_list:
             if node.get_x() > x_max:
                 x_max = node.get_x()
@@ -186,8 +190,8 @@ class GraphAlgo(GraphAlgoInterface):
                 y_max = node.get_y()
             if node.pos is None:  # take care of a case where node dont have position
                 if x_max == 0 and y_max == 0:  # takes care of a case where the node without position is 1st node
-                    x_max = randint(0, 5)
-                    y_max = randint(0, 5)
+                    x_max = randint(5, 15)
+                    y_max = randint(5, 15)
                 node.pos = (randint(0, x_max), randint(0, y_max), 0)
             #  add node position x,y values in two lists
             positionOfNodes[node.key] = [node.get_x(), node.get_y()]
@@ -199,11 +203,11 @@ class GraphAlgo(GraphAlgoInterface):
         # print(edges_list)
 
         # plot for the nodes and their annotation
-        fig, ax1 = plt.subplots()
+        fig, ax1 = plt.subplots(figsize=(12.8, 14.2))
         for node, value in positionOfNodes.items():
             ax1.scatter(value[0], value[1], facecolor='c', s=100, c="c", alpha=0.4, marker='*',
                         label='$node%i$' % node + ' $pos(%i$' % value[0] + '$,%i$' % value[1] + ')')
-            ax1.annotate(node, (value[0], value[1]))
+            ax1.annotate(node, (value[0], value[1]), alpha=1)
 
         # creating arrows for each edge by iterating the edges_list
         coordsA = "data"
@@ -215,16 +219,15 @@ class GraphAlgo(GraphAlgoInterface):
             xyB = (node_dest.get_x(), node_dest.get_y())
             con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
                                   arrowstyle="-|>", shrinkA=10, shrinkB=9,
-                                  mutation_scale=20, fc="k")
+                                  mutation_scale=20, alpha=0.6, fc="k")
             ax1.add_artist(con)
 
-        plt.title('Directed_Weighted_Graph')
-        # plt.axis('equal')
         box = ax1.get_position()
-        ax1.set_position([box.x0, box.y0, box.width * 0.77, box.height])
+        ax1.set_position([box.x0, box.y0, box.width * 0.90, box.height])
 
         # Put a legend to the right of the current axis
         ax1.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        plt.title('Directed_Weighted_Graph')
         plt.xlabel('X')
         plt.ylabel('Y')
         plt.show()
@@ -310,4 +313,9 @@ class GraphAlgo(GraphAlgoInterface):
                 else:
                     hashmap[vertex.t].append(node)
 
+<<<<<<< HEAD
                 node.visited = False
+
+=======
+                node.visited = False
+>>>>>>> 73ac8ee4774413fadf7d388bea9d393299db36b5
