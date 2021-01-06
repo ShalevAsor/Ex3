@@ -86,7 +86,6 @@ class MyTestCase(unittest.TestCase):
                   2) save and load empty graphs
                   3) save and load large graphs
                   4) load json from data to graph object
-
         """
         file_name = "random_graph"
         g = graph_creator_with_edges(10, 10)  # create random graph with 10 nodes and edges
@@ -100,7 +99,11 @@ class MyTestCase(unittest.TestCase):
         empty_graph = GraphAlgo()
         self.assertTrue(empty_graph.save_to_json("empty_graph"))  # save and load empty graph
         self.assertTrue(empty_graph.load_from_json("empty_graph"))
+<<<<<<< HEAD
         large_graph = graph_creator_with_edges(100000, 10000)
+=======
+        large_graph=graph_creator_with_edges(100000, 10000)
+>>>>>>> 2704dbac9990b229b78b61c8227e12d1f55d804e
         self.assertTrue(large_graph.save_to_json("large graph"))  # save and load large graph
         self.assertTrue(large_graph.load_from_json("large graph"))
 
