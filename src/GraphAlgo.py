@@ -68,15 +68,30 @@ class GraphAlgo(GraphAlgoInterface):
 
                 try:
                     for k in list_of_nodes:
-                        if "pos" in my_graph:
-                            g.add_node(k["id"], k["pos"])
+                        if 'pos' in k:
+                            # try:
+                                p = tuple(float(i) for i in k["pos"].strip("()").split(","))
+                                g.add_node(k["id"], p)
+                            # except Exception:
+                            #     # p = k.get("pos")
+                            #     # g.add_node(k["id"], (p[0], p[1], p[2]))
+
                         else:
                             g.add_node(k["id"])
                     for k in list_of_edges:
                         g.add_edge(k["src"], k["dest"], k["w"])
                 except Exception:
                     for k in list_of_nodes:
-                        g.add_node(k["key"], k["pos"])
+                        if "pos" in k:
+                            try:
+                                p = tuple(float(i) for i in k["pos"].strip("()").split(","))
+                                g.add_node(k["key"], p)
+                            except Exception:
+                                p = k.get("pos")
+                                g.add_node(k["key"], (float(p[0]), float(p[1]), float(p[2])))
+                        else:
+                            g.add_node(k["key"])
+
                     for k in list_of_edges:
                         g.add_edge(k["src"], k["dest"], k["weight"])
 
@@ -194,6 +209,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def plot_graph(self) -> None:
         # data members
+        print('entered')
         positionOfNodes = {}
         nodes_list = self.Graph.get_all_v().values()
         edges_list = list()
@@ -209,15 +225,14 @@ class GraphAlgo(GraphAlgoInterface):
         for node in nodes_list:
             if node.pos is None:  # take care of a case where node dont have position
                 if x_max == 0 and y_max == 0:  # in case all nodes without position we pick a arena in size of nodes*7
-                    x_max = randint(0, len(nodes_list)*7)
-                    y_max = randint(0, len(nodes_list)*7)
+                    x_max = randint(0, len(nodes_list)*10)
+                    y_max = randint(0, len(nodes_list)*10)
                 x_final = x_max
                 y_final = y_max
                 while x_final in history.keys():  # in case of duplicate generated pos,
                     x_final = randint(0, x_max)   # we randomize until we get a new one,
                     y_final = randint(0, y_max)   # therefore time complexity increases but
                 node.pos = (x_final, y_final, 0)  # graph will look more elegant
-
 
             #  add node position x,y values in two lists
             positionOfNodes[node.key] = [node.get_x(), node.get_y()]
