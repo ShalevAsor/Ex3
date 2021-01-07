@@ -89,6 +89,7 @@ def compares_run_time_cc_of_node(node_id: int, v_size: int, e_size: int) -> list
         cc.append(node.key)
         i += 1
     cc.sort(reverse=True)
+    nx_results.sort(reverse=True)
     run_time_graph_algo = end_time - start_time
     print("run time of GraphAlgo :", run_time_graph_algo)
     return [nx_results, cc]
@@ -261,46 +262,46 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph B------------#
-        print("Graph B:\n")
+        print("\nGraph B:\n")
         results = compares_run_time_sp(10, 900, 1000, 10000)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph C------------#
-        print("Graph C:\n")
+        print("\nGraph C:\n")
         results = compares_run_time_sp(2800, 36, 10000, 100000)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph D------------#
-        print("Graph D:\n")
+        print("\nGraph D:\n")
         results = compares_run_time_sp(15000, 99999, 100000, 1000000)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph A5 from data folder------------#
-        print("Graph A5:\n")
+        print("\nGraph A5:\n")
         file_name = "../data/A5"
         results = compares_run_time_sp_json(1,6,file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph G_10_80_0.json from data folder------------#
-        print("Graph G_10_80_0:\n")
+        print("\nGraph G_10_80_0:\n")
         file_name = "../data/G_10_80_0.json"
-        results = compares_run_time_sp_json(1, 30, file_name)
+        results = compares_run_time_sp_json(1, 4, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph G_1000_8000_0.json from data folder------------#
-        print("Graph G_1000_8000_0:\n")
+        print("\nGraph G_1000_8000_0:\n")
         file_name = "../data/G_1000_8000_0.json"
         results = compares_run_time_sp_json(0, 44, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph G_20000_160000_0.json from data folder------------#
-        print("Graph G_20000_160000_0:\n")
+        print("\nGraph G_20000_160000_0:\n")
         file_name = "../data/G_20000_160000_0.json"
         results = compares_run_time_sp_json(18, 1500, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph G_30000_240000_0.json from data folder------------#
-        print("Graph G_30000_240000_0:\n")
+        print("\nGraph G_30000_240000_0:\n")
         file_name = "../data/G_30000_240000_0.json"
         results = compares_run_time_sp_json(1203, 3, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
