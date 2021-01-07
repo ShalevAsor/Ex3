@@ -1,3 +1,4 @@
+import json
 import unittest
 import networkx as nx
 from src.GraphAlgo import GraphAlgo
@@ -245,6 +246,27 @@ def graph_generator(v_size: int, e_size: int) -> list:
     graph_algo = GraphAlgo(my_graph)
     return [graph_algo, nx_graph]
 
+def load_java(self)->list():
+    """
+    function to load the java results file
+    used for single purpose
+    """
+    try:
+        with open("../data/JavaResults", "r") as file:
+            jsonObject = json.load(file)
+            ConnectedComponentsToNode = jsonObject["ConnectedComponentsToNode"]
+            NumOfScc = jsonObject["NumOfScc"]
+            ShortestPathDist = jsonObject["ShortestPathDist"]
+            ShortestPath = ["ShortestPath"]
+            list = [ConnectedComponentsToNode, NumOfScc, ShortestPathDist, ShortestPath]
+            return list
+    except Exception:
+        print("json issue")
+
+
+
+
+
 
 class MyTestCase(unittest.TestCase):
 
@@ -343,16 +365,19 @@ class MyTestCase(unittest.TestCase):
         print("Graph A5:")
         file_name = "../data/A5"
         results = compares_run_time_cc_json(file_name)
+        print(results[0])
         self.assertEqual(results[0], results[1])
         # -------------graph G_10_80_0.json from data folder------------#
         print("Graph G_10_80_0:")
         file_name = "../data/G_10_80_0.json"
         results = compares_run_time_cc_json(file_name)
+        print(results[0])
         self.assertEqual(results[0], results[1])
         # -------------graph G_1000_8000_0.json from data folder------------#
         print("Graph G_1000_8000_0:")
         file_name = "../data/G_1000_8000_0.json"
         results = compares_run_time_cc_json(file_name)
+        print(results[0])
         self.assertEqual(results[0], results[1])
 
     def test_comparison_connected_component(self):
@@ -409,6 +434,9 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_100_800_0.json"
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])
+
+    def test_load(self):
+        vars = load_java(self)
 
 
 if __name__ == '__main__':
