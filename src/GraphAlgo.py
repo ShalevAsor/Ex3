@@ -38,6 +38,19 @@ class GraphAlgo(GraphAlgoInterface):
         def __repr__(self):
             return f"cur_key:{self.current_key},p_key:{self.parent_key},weight:{self.weight}"
 
+        def __le__(self, other):
+            if self.weight < other.weight:
+                return -1
+            else:
+                return 1
+
+        def __lt__(self, other):
+            if self.weight < other.weight:
+                return -1
+            else:
+                return 1
+
+
     def __init__(self, graph: GraphInterface = None):
         """
         init graph algo to work on a specific graph
@@ -69,12 +82,8 @@ class GraphAlgo(GraphAlgoInterface):
                 try:
                     for k in list_of_nodes:
                         if 'pos' in k:
-                            # try:
                                 p = tuple(float(i) for i in k["pos"].strip("()").split(","))
                                 g.add_node(k["id"], p)
-                            # except Exception:
-                            #     # p = k.get("pos")
-                            #     # g.add_node(k["id"], (p[0], p[1], p[2]))
 
                         else:
                             g.add_node(k["id"])
@@ -322,7 +331,7 @@ class GraphAlgo(GraphAlgoInterface):
                         smallest_weight = p_sub_node.weight + self.get_graph().get_edge(current_key, p_edge).weight
                         if smallest_weight < p_dest.weight:
                             p_dest.weight = smallest_weight
-                            heapq.heappush(heap_priority, (p_dest.weight, p_dest))  # add the tuple to the heap
+                            heapq.heappush(heap_priority,(p_dest.weight,p_dest))  # add the tuple to the heap
                             # Note: the heap compare the weight of the vertex
                             dist_and_path[0] += p_dest.weight
         dist_and_path[1] = short_path

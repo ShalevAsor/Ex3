@@ -48,5 +48,3 @@ class NodeData:
             return False
 
 
-if __name__ == '__main__':
-    print(hash((2)))

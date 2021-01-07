@@ -161,7 +161,7 @@ class DiGraph(GraphInterface):
             return False
         if node_id2 not in self.Edges[node_id1]:  # if both are in graph but there is no edge return False
             return False
-        return self.Edges[node_id1][node_id2]
+        return True
 
     def get_edge(self, node_id1: int, node_id2: int) -> EdgeData:
         """

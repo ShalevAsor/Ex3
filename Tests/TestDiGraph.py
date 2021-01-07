@@ -64,12 +64,6 @@ class MyTestCase(unittest.TestCase):
         g.add_edge(2, 3, 23)
         node1_all_out = {2: g.get_node(2), 3: g.get_node(3)}
         self.assertDictEqual(node1_all_out, g.all_out_edges_of_node(1))
-        # print(g.all_out_edges_of_node(1))
-        # print(g.all_out_edges_of_node(2))
-        # print(g.all_out_edges_of_node(3))
-        # print(g.all_in_edges_of_node(1))
-        # print(g.all_in_edges_of_node(2))
-        # print(g.all_in_edges_of_node(3))
 
     def test_remove_node_ESize(self):
         """
@@ -101,20 +95,7 @@ class MyTestCase(unittest.TestCase):
         self.assertFalse(g.has_edge(2, 1))
         self.assertFalse(g.has_edge(3, 1))
         self.assertFalse(g.has_edge(1, 3))
-        # print(g.all_out_edges_of_node(1))
-        # print(g.all_out_edges_of_node(2))
-        # print(g.all_out_edges_of_node(3))
-        # print(" ")
-        # print(g.all_in_edges_of_node(1))
-        # print(g.all_in_edges_of_node(2))
-        # print(g.all_in_edges_of_node(3))
-        # print(" ")
-        # g.remove_node(2)
-        # print(g.all_out_edges_of_node(1))
-        # print(g.all_out_edges_of_node(3))
-        # print(" ")
-        # print(g.all_in_edges_of_node(1))
-        # print(g.all_in_edges_of_node(3))
+
 
     def test_remove_edge(self):
         """
