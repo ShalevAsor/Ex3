@@ -404,6 +404,11 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_1000_8000_0.json"
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])
+        # -------------graph G_100_800_0.json from data folder------------#
+        print("Graph G_100_800_0:")
+        file_name = "../data/G_100_800_0.json"
+        results = compares_run_time_cc_of_node_json(8, file_name)
+        self.assertEqual(results[0], results[1])
 
 
 if __name__ == '__main__':
