@@ -3,30 +3,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 if __name__ == '__main__':
-
-
-    #def __init__(self):
-
-
-
     # ---------------shortest_path--------------#
     title = "shortest path run time"
-    labels = ['G10', 'G1K', 'G20K', 'G30K', 'G100K_1M']
-    nx_runtime = [0.0, 0.004000, 0.120001, 0.197962, 1.258011]
-    ga_runtime = [0.0, 0.009001, 0.320001, 0.662059, 4.903963]
-    ga_java_runtime = [1, 1, 1, 1, 1]
+    labels = ['G10', 'G1K', 'G20K', 'G30K']
+    nx_runtime = [0.0, 0.004000, 0.120001, 0.197962]
+    ga_runtime = [0.0, 0.009001, 0.320001, 0.662059]
+    ga_java_runtime = [0, 0.001, 0.0221, 0.0316]
     # -----------connected_components-----------#
     # title="connected_components run time"
-    # labels = ['G10', 'G1K', 'A5', 'G100K', 'G5']
-    # nx_runtime = [0.0, 0.015972, 0.0, 0.013471, 0.00]
-    # ga_runtime = [0.003988, 0.008812, 0.0, 0.01246, 0.002]
-    # ga_java_runtime = [0.1, 0.005, 0.465, 3.6, 0.002]
+    # labels = ['G10', 'G1K', 'A5']
+    # nx_runtime = [0.0, 0.015972, 0.0]
+    # ga_runtime = [0.003988, 0.008812, 0.0,]
+    # ga_java_runtime = [0, 0, 0,]
     # -----------connected_component-----------#
     # title="connected_component run time"
-    # labels = ['G10', 'G1K', 'A5', 'G100K', 'G100']
-    # nx_runtime = [0.0, 0.021676,0.001008, 0.108131, 0.005307]
-    # ga_runtime = [0.0, 0.014198, 0.0, 0.236313, 0.0]
-    # ga_java_runtime = [0.1, 0.005, 0.465, 3.6, 0.002]
+    # labels = ['G10', 'G1K', 'A5',]
+    # nx_runtime = [0.0, 0.021676,0.001008]
+    # ga_runtime = [0.0, 0.014198, 0.0]
+    # ga_java_runtime = [0, 0, 0.009,]
 
     x = np.arange(len(labels))  # the label locations
     width = 0.2  # the width of the bars
