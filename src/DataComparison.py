@@ -10,7 +10,11 @@ if __name__ == '__main__':
     # ga_runtime = [0.0, 0.009001, 0.320001, 0.662059]
     # ga_java_runtime = [0, 0.001, 0.221,0.316]
     # -----------connected_components-----------#
+<<<<<<< HEAD
     title="connected_components run time"
+=======
+    title="node's strongly connected component"
+>>>>>>> 39be11dc2822f6b7343f0402d80c0156e60287eb
     labels = ['G10', 'G1K', 'A5']
     nx_runtime = [0.0, 0.015972, 0.0]
     ga_runtime = [0.003988, 0.008812, 0.0,]
