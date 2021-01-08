@@ -76,9 +76,9 @@ class MyTestCase(unittest.TestCase):
         # the shortest path is: 1-->2-->3-->4-->6-->5 , weight: 6.1
         self.assertEqual((6.1, [1, 2, 3, 4, 6, 5]), g_3.shortest_path(1, 5))
         g_4 = graph_creator(2)  # init graph with two nodes
-        self.assertEqual((-1, []), g_4.shortest_path(1, 6))  # node 6 is not in the graph-there is no path
+        self.assertEqual((float('inf'), []), g_4.shortest_path(1, 6))  # node 6 is not in the graph-there is no path
         self.assertEqual((0, [1]), g_4.shortest_path(1, 1))  # shortest path from node to itself
-        self.assertEqual((-1, []), g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
+        self.assertEqual((float('inf'), []), g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
 
     def test_save_and_load(self):
         """
