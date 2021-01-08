@@ -4,17 +4,17 @@ import numpy as np
 
 if __name__ == '__main__':
     # ---------------shortest_path--------------#
-    title = "shortest path run time"
-    labels = ['G10', 'G1K', 'G20K', 'G30K']
-    nx_runtime = [0.0, 0.004000, 0.120001, 0.197962]
-    ga_runtime = [0.0, 0.009001, 0.320001, 0.662059]
-    ga_java_runtime = [0, 0.001, 0.221,0.316]
+    # title = "shortest path run time"
+    # labels = ['G10', 'G1K', 'G20K', 'G30K']
+    # nx_runtime = [0.0, 0.004000, 0.120001, 0.197962]
+    # ga_runtime = [0.0, 0.009001, 0.320001, 0.662059]
+    # ga_java_runtime = [0, 0.001, 0.221,0.316]
     # -----------connected_components-----------#
-    # title="connected_components run time"
-    # labels = ['G10', 'G1K', 'A5']
-    # nx_runtime = [0.0, 0.015972, 0.0]
-    # ga_runtime = [0.003988, 0.008812, 0.0,]
-    # ga_java_runtime = [0, 0, 0,]
+    title="connected_components run time"
+    labels = ['G10', 'G1K', 'A5']
+    nx_runtime = [0.0, 0.015972, 0.0]
+    ga_runtime = [0.003988, 0.008812, 0.0,]
+    ga_java_runtime = [0, 0, 0,]
     # -----------connected_component-----------#
     # title="connected_component run time"
     # labels = ['G10', 'G1K', 'A5',]

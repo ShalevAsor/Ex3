@@ -143,7 +143,7 @@ def compares_run_time_sp(src: int, dest: int, v_size: int, e_size: int) -> list:
     :param e_size:  number of edges
     :return: list, int the first place networkx graph results and the second GraphAlgo results
     """
-    results = [-1, [], -1, []]
+    results = [float('inf'), [], float('inf'), []]
     graph_list = graph_generator(v_size, e_size)
     graph_algo = graph_list[0]
     nx_graph = graph_list[1]
