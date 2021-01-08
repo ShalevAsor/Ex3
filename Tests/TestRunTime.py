@@ -18,14 +18,14 @@ def compares_run_time_cc(v_size: int, e_size: int) -> list:
     :return: list, int the first place networkx graph results and the second GraphAlgo results
     """
     graph_list = graph_generator(v_size, e_size)  # graph A
-    graph_algo = graph_list[0]
+    graph_algo = graph_list[0]  # graph algo and nx graph has the same vertices and edges
     nx_graph = graph_list[1]
-    start_time = datetime.now()
+    start_time = datetime.now()  # calculation of run time
     nx_results = nx.number_strongly_connected_components(nx_graph)
     end_time = datetime.now()
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
-    start_time = datetime.now()
+    start_time = datetime.now()  # calculation of run time
     my_results = len(graph_algo.connected_components())
     end_time = datetime.now()
     run_time_my = end_time - start_time
@@ -41,20 +41,20 @@ def compares_run_time_cc_json(file_name: str) -> list:
     :return: list , the first place is the results of nx graph and the second is the results of GraphAlgo
     """
     graph_algo = GraphAlgo()
-    graph_algo.load_from_json(file_name)
+    graph_algo.load_from_json(file_name)  # load the json
     g = nx.Graph()
     nx_graph = g.to_directed()
-    for node in graph_algo.get_graph().get_all_v().values():
+    for node in graph_algo.get_graph().get_all_v().values():  # copies all data to nx_graph
         nx_graph.add_node(node.key, pos=node.pos)
     for edges in graph_algo.get_graph().Edges.values():
         for edge in edges.values():
             nx_graph.add_edge(edge.src, edge.dest, weight=edge.weight)
-    start_time = datetime.now()
+    start_time = datetime.now()  # cc run time of networkx
     nx_results = nx.number_strongly_connected_components(nx_graph)
     end_time = datetime.now()
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
-    start_time = datetime.now()
+    start_time = datetime.now()  # cc run time of GraphAlgo
     my_results = len(graph_algo.connected_components())
     end_time = datetime.now()
     run_time_my = end_time - start_time
@@ -68,6 +68,7 @@ def compares_run_time_cc_of_node(node_id: int, v_size: int, e_size: int) -> list
     the edges and node positions are randomly
     :param v_size: number of vertices
     :param e_size:  number of edges
+    :param node_id: the key of the vertex
     :return: list, int the first place networkx graph results and the second GraphAlgo results
     """
     graph_list = graph_generator(v_size, e_size)  # graph A
@@ -75,7 +76,8 @@ def compares_run_time_cc_of_node(node_id: int, v_size: int, e_size: int) -> list
     nx_graph = graph_list[1]
     nx_results = []
     start_time = datetime.now()
-    for cc_of_node in nx.strongly_connected_components(nx_graph):
+    for cc_of_node in nx.strongly_connected_components(nx_graph):  # use strongly connected components to get the cc
+        # of node
         if node_id in cc_of_node:
             nx_results = list(cc_of_node)
     end_time = datetime.now()
@@ -89,7 +91,7 @@ def compares_run_time_cc_of_node(node_id: int, v_size: int, e_size: int) -> list
     for node in my_results:
         cc.append(node.key)
         i += 1
-    cc.sort(reverse=True)
+    cc.sort(reverse=True)  # sort the list
     nx_results.sort(reverse=True)
     run_time_graph_algo = end_time - start_time
     print("run time of GraphAlgo :", run_time_graph_algo)
@@ -146,7 +148,7 @@ def compares_run_time_sp(src: int, dest: int, v_size: int, e_size: int) -> list:
     graph_algo = graph_list[0]
     nx_graph = graph_list[1]
     start_time = datetime.now()
-    try:
+    try:  # use try and except in case that there is no path
         nx_path = nx.shortest_path(nx_graph, src, dest, weight="weight")
         end_time = datetime.now()
         run_time_nx = end_time - start_time
@@ -157,7 +159,7 @@ def compares_run_time_sp(src: int, dest: int, v_size: int, e_size: int) -> list:
         end_time = datetime.now()
         run_time_nx = end_time - start_time
         print("run time of networkx graph:", run_time_nx)
-    try:
+    try:  # the shortest path length not included in the run time of shortest path
         nx_length = nx.shortest_path_length(nx_graph, src, dest, weight="weight")
         results[0] = nx_length
     except Exception as ex:
@@ -176,7 +178,9 @@ def compares_run_time_sp_json(src: int, dest: int, file_name: str) -> list:
     """
     Compares the running time of the shortest path method in GraphAlgo  and Networkx
     The graph is created from json file
-    :param file_name:
+    :param file_name: json path
+    :param src: source of the path
+    :param dest: destination of the path
     """
     results = [-1, [], -1, []]
     graph_algo = GraphAlgo()
@@ -246,7 +250,8 @@ def graph_generator(v_size: int, e_size: int) -> list:
     graph_algo = GraphAlgo(my_graph)
     return [graph_algo, nx_graph]
 
-def load_java(self)->list():
+
+def load_java(self) -> list:
     """
     function to load the java results file
     used for single purpose
@@ -264,11 +269,11 @@ def load_java(self)->list():
         print("json issue")
 
 
-
-
-
-
 class MyTestCase(unittest.TestCase):
+    """
+    compares the run time of three type of graphs:  GraphAlgo, DW_GraphAlgo(java), and networkx directed weighted graph
+    each test examines the runtime of each graph and the correctness of the results
+    """
 
     def test_comparison_shortest_path(self):
         """
@@ -279,7 +284,7 @@ class MyTestCase(unittest.TestCase):
         graph A: 100 vertices 1k edges, B: 1k v, 10k e , C:  10kv, 100k e, D: 100k v, 1m e
         """
         shortest_pd = load_java(self)[2]
-        shortest_p=load_java(self)[3]
+        shortest_p = load_java(self)[3]
         # -------------graph A------------#
         print("Graph A:\n")
         results = compares_run_time_sp(1, 30, 100, 1000)
@@ -303,10 +308,10 @@ class MyTestCase(unittest.TestCase):
         # -------------graph A5 from data folder------------#
         print("\nGraph A5:\n")
         file_name = "../data/A5"
-        results = compares_run_time_sp_json(1,6,file_name)
+        results = compares_run_time_sp_json(1, 6, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
-        self.assertEqual(results[2], shortest_pd[1]) # path weight of java and GraphAlgo
+        self.assertEqual(results[2], shortest_pd[1])  # path weight of java and GraphAlgo
         self.assertEqual(results[3], shortest_p[1])  # path of java and GraphAlgo
         # -------------graph G_10_80_0.json from data folder------------#
         print("\nGraph G_10_80_0:\n")
@@ -380,8 +385,8 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/A5"
         results = compares_run_time_cc_json(file_name)
         print(results[0])
-        self.assertEqual(results[0], results[1]) # compare to networkx
-        self.assertEqual(results[0],connected_cc[1]) # compare to java
+        self.assertEqual(results[0], results[1])  # compare to networkx
+        self.assertEqual(results[0], connected_cc[1])  # compare to java
         # -------------graph G_10_80_0.json from data folder------------#
         print("Graph G_10_80_0:")
         file_name = "../data/G_10_80_0.json"
@@ -437,7 +442,7 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/A5"
         results = compares_run_time_cc_of_node_json(20, file_name)
         self.assertEqual(results[0], results[1])
-        self.assertEqual(connected_cc[1], results[0]) # compare to java
+        self.assertEqual(connected_cc[1], results[0])  # compare to java
         # -------------graph G_10_80_0.json from data folder------------#
         print("Graph G_10_80_0:")
         file_name = "../data/G_10_80_0.json"
@@ -455,8 +460,6 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_100_800_0.json"
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])
-
-
 
 
 if __name__ == '__main__':
