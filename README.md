@@ -11,18 +11,26 @@ you can find much more information about directed graph [here](https://en.wikipe
 
 
 
-## The benefits of using my dwg:
+## The benefits of using GraphAlgo:
 - Low Complexity
 - Support more than one mil verteices and ten mil edges
 - each public class has tests
 - support algorithms like Dijkstra's and Bfs
+- each un-trivail metohd attached with explanations
+- support ploting the graph and create randomly positions 
+- quick access to nodes/edges 
+To see the comparison with other graphs click [here](https://github.com/ShalevAsor/Ex3/wiki) <br>
+ 
 
 ## How it works? 
-add node into the graph : addNode(<vertex>) <br>
-connect two nodes: connect(<node key>,<node key>) <br>
-remove node from the graph: remove(<node key>) <br>
+add node into the graph : add_node(<node id>, <position>) <br>
+connect two nodes with a weight: add_edge(<source node key >,<destination node key>, <weight>) <br>
+remove node from the graph: remove_node(<node key>) <br>
 Note: this method will remove all the edges that this node was associate with <br>
-remove edge from the graph: removeEdge(<node key>,<node key>) <br>
+remove edge from the graph: remove_edge(<node src key>,<node dest key>) <br>
+dictunary of all the nodes in the graph : get_all_v() <br>
+dictunary of all the node that connected ### to the node_id : all_in_edges_of_node(<node_id>) <br>
+ dictunary of all the node that connected ### from the node_id : all_out_edges_of_node(<node_id>) <br>
 For more information, i recommend diving into the code, there is explanations attached to each method. <br>
  
  
