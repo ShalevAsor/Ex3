@@ -234,13 +234,23 @@ class GraphAlgo(GraphAlgoInterface):
         for node in nodes_list:
             if node.pos is None:  # take care of a case where node dont have position
                 if x_max == 0 and y_max == 0:  # in case all nodes without position we pick a arena in size of nodes*7
-                    x_max = randint(0, len(nodes_list)*10)
-                    y_max = randint(0, len(nodes_list)*10)
+                    x_max = randint(len(nodes_list), len(nodes_list)*10)
+                    y_max = randint(len(nodes_list), len(nodes_list)*10)
                 x_final = x_max
                 y_final = y_max
-                while x_final in history.keys():  # in case of duplicate generated pos,
+                # while x_final in history.keys():  # in case of duplicate generated pos,
+                #     x_final = randint(0, x_max)   # we randomize until we get a new one,
+                #     y_final = randint(0, y_max)   # therefore time complexity increases but
+                # node.pos = (x_final, y_final, 0)  # graph will look more elegant
+                if x_final in history.keys():  # in case of duplicate generated pos,
+                    temp=x_final
                     x_final = randint(0, x_max)   # we randomize until we get a new one,
                     y_final = randint(0, y_max)   # therefore time complexity increases but
+                    if x_final==temp and hash(temp) in history.keys():
+                        x_final=hash(temp)
+                    else:
+                        x_final+=hash(hash(temp))
+
                 node.pos = (x_final, y_final, 0)  # graph will look more elegant
 
             #  add node position x,y values in two lists
@@ -256,8 +266,8 @@ class GraphAlgo(GraphAlgoInterface):
         # plot for the nodes and their annotation
         fig, ax1 = plt.subplots(figsize=(12.8, 14.2))
         for node, value in positionOfNodes.items():
-            ax1.scatter(value[0], value[1], facecolor='c', s=100, c="c", alpha=0.4, marker='*',
-                        label='$node%i$' % node + ' $pos(%i$' % value[0] + '$,%i$' % value[1] + ')')
+            ax1.scatter(value[0],value[1],c='c')
+
             ax1.annotate(node, (value[0], value[1]), alpha=1)
 
         # creating arrows for each edge by iterating the edges_list
@@ -273,11 +283,11 @@ class GraphAlgo(GraphAlgoInterface):
                                   mutation_scale=20, alpha=0.6, fc="k")
             ax1.add_artist(con)
 
-        box = ax1.get_position()
-        ax1.set_position([box.x0, box.y0, box.width * 0.90, box.height])
+        # box = ax1.get_position()
+        # ax1.set_position([box.x0, box.y0, box.width * 0.90, box.height])
 
         # Put a legend to the right of the current axis
-        ax1.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        # ax1.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         plt.title('Directed_Weighted_Graph')
         plt.xlabel('X')
         plt.ylabel('Y')

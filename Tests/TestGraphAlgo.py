@@ -29,6 +29,7 @@ def graph_creator_with_edges(v_size: int, e_size: int) -> GraphAlgo:
         x = random.uniform(0.1, 35)
         y = random.uniform(0.1, 35)
         position = (x, y, 0)
+        #t.add_node(v, pos=position)
         t.add_node(v, pos=position)
         v += 1
     while e <= e_size:
@@ -161,6 +162,8 @@ class MyTestCase(unittest.TestCase):
         g.add_edge(6, 7, 1)
         g.add_edge(7, 5, 1)
         ga.plot_graph()  # plot in case of nodes without position
+
+
 
 
 if __name__ == '__main__':
