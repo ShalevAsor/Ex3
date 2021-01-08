@@ -57,7 +57,6 @@ for example : <br>
 <a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up2/2mdhzomitddn.png" border="0" alt="shortest" /></a> <br>
 the shortest path from node 1 to 2 is : 1---> 3--->2 <br>
 
-Shortest Path works the same way but return the List represents the path from the source to destination. <br>
 plot_garph : plot the graph - if the vertices has no positions the will be places in randomly (elegant) <br>
 **example:** <br>
 <a href="https://bbcode0.com" target="_blank"><img src="https://cdn1.bbcode0.com/uploads/2021/1/8/d4f8e7fd2b7f323d20b9a7cfdef7e6ff-full.png" border="0"/></a>
