@@ -51,6 +51,7 @@ this graph is **strongly connected** <br>
 ![](https://github.com/ShalevAsor/Ex3/blob/master/data/dir.png)
 
 for more information about strongly connected graph : click [here](https://en.wikipedia.org/wiki/Strongly_connected_component) <br>
+
 dijkstra's algorithm used in the methods shortest_path <br>
 - **Shortest path:** return the shortest path between two nodes in the graph and the length of the path. <br>
 the shortest path will be the path with the minimalist edges weight <br>
