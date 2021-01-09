@@ -158,19 +158,19 @@ class GraphAlgo(GraphAlgoInterface):
         :return: list of the shortest path
         """
         if id1 not in self.Graph.Nodes or id2 not in self.Graph.Nodes:
-            return (float('inf'),[])  # there is no path
+            return (float('inf'), [])  # there is no path
         s_path = [float, []]
         p_t = self.dijkstras(self.get_graph().get_node(id1), self.get_graph().get_node(id2))
         i, size, no_path = 0, len(p_t[1]), 0
         p_s_node = self.get_sub_node(p_t[1], id2)  # get_sub_node return the node by the give key from the list
-        if p_s_node is None: return (float('inf'),[])  # get_sub_node returned None= there is no path
+        if p_s_node is None: return (float('inf'), [])  # get_sub_node returned None= there is no path
         s_path[1].append(p_s_node.current_key)  # add to the list
         s_path[0] = p_s_node.weight  # the shortest path weight
         while p_s_node.current_key != id1:
             s_path[1].append(p_s_node.parent_key)  # add the parent
             p_s_node = self.get_sub_node(p_t[1], p_s_node.parent_key)  # to get his parent
             if no_path == size - 1:  # there is no path
-                return (float('inf'),[])
+                return (float('inf'), [])
             no_path += 1
         s_path[1].reverse()  # reverse the list
         return tuple(s_path)
@@ -284,8 +284,7 @@ class GraphAlgo(GraphAlgoInterface):
         plt.ylabel('Y')
         plt.show()
 
-    @staticmethod
-    def get_sub_node(path: list, key: int) -> SubNode:
+    def get_sub_node(self, path: list, key: int) -> SubNode:
         i = 0
         size = len(path)
         while i < size:

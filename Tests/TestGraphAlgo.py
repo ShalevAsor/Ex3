@@ -78,7 +78,8 @@ class MyTestCase(unittest.TestCase):
         g_4 = graph_creator(2)  # init graph with two nodes
         self.assertEqual((float('inf'), []), g_4.shortest_path(1, 6))  # node 6 is not in the graph-there is no path
         self.assertEqual((0, [1]), g_4.shortest_path(1, 1))  # shortest path from node to itself
-        self.assertEqual((float('inf'), []), g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
+        self.assertEqual((float('inf'), []),
+                         g_4.shortest_path(1, 2))  # node 1 and 2 is in the graph with no path between them
 
     def test_save_and_load(self):
         """
@@ -161,8 +162,6 @@ class MyTestCase(unittest.TestCase):
         g.add_edge(6, 7, 1)
         g.add_edge(7, 5, 1)
         ga.plot_graph()  # plot in case of nodes without position
-
-
 
 
 if __name__ == '__main__':
