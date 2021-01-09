@@ -285,6 +285,7 @@ class MyTestCase(unittest.TestCase):
         """
         shortest_pd = load_java(self)[2]
         shortest_p = load_java(self)[3]
+        print("shortest_path:\n")
         # -------------graph A------------#
         print("Graph A:\n")
         results = compares_run_time_sp(1, 30, 100, 1000)
@@ -306,6 +307,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         # -------------graph A5 from data folder------------#
+        print("shortest_path (json):\n")
         print("\nGraph A5:\n")
         file_name = "../data/A5"
         results = compares_run_time_sp_json(1, 6, file_name)
@@ -354,21 +356,22 @@ class MyTestCase(unittest.TestCase):
         this test checks the above on four sizes of graphs
         graph A: 100 vertices 100 edges, B: 10k v, 10k e , C:  100kv, 100k e, D: 1m v, 100k e
         """
+        print("connected_components:\n")
 
         # -------------graph A------------#
         print("Graph A:")
         results = compares_run_time_cc(100, 100)
         self.assertEqual(results[0], results[1])
         # -------------graph B------------#
-        print("Graph B:")
+        print("\nGraph B:\n")
         results = compares_run_time_cc(10000, 10000)
         self.assertEqual(results[0], results[1])
         # -------------graph C------------#
-        print("Graph C:")
+        print("\nGraph C:\n")
         results = compares_run_time_cc(100000, 100000)
         self.assertEqual(results[0], results[1])
         # -------------graph D------------#
-        print("Graph D:")
+        print("\nGraph D:\n")
         results = compares_run_time_cc(1000000, 100000)
         self.assertEqual(results[0], results[1])
 
@@ -380,20 +383,21 @@ class MyTestCase(unittest.TestCase):
         this test checks the above on graphs from json files
         """
         connected_cc = load_java(self)[1]
+        print("connected_components (json):\n")
         # -------------graph A5 from data folder------------#
-        print("Graph A5:")
+        print("Graph A5:\n")
         file_name = "../data/A5"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
         self.assertEqual(results[0], connected_cc[1])  # compare to java
         # -------------graph G_10_80_0.json from data folder------------#
-        print("Graph G_10_80_0:")
+        print("\nGraph G_10_80_0:\n")
         file_name = "../data/G_10_80_0.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
         self.assertEqual(results[0], connected_cc[4])  # compare to java
         # -------------graph G_1000_8000_0.json from data folder------------#
-        print("Graph G_1000_8000_0:")
+        print("\nGraph G_1000_8000_0:\n")
         file_name = "../data/G_1000_8000_0.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
@@ -408,20 +412,21 @@ class MyTestCase(unittest.TestCase):
         this test checks the above on four sizes of graphs:
         graph A: 100 vertices 100 edges, B: 10k v, 10k e , C:  100kv, 100k e, D: 1m v, 100k e
         """
+        print("connected_component:\n")
         # -------------graph A------------#
         print("Graph A:\n")
         results = compares_run_time_cc_of_node(13, 100, 100)
         self.assertEqual(results[0], results[1])
         # -------------graph B------------#
-        print("Graph B:\n")
+        print("\nGraph B:\n")
         results = compares_run_time_cc_of_node(990, 10000, 10000)
         self.assertEqual(results[0], results[1])
         # -------------graph C------------#
-        print("Graph C:\n")
+        print("\nGraph C:\n")
         results = compares_run_time_cc_of_node(1, 100000, 100000)
         self.assertEqual(results[0], results[1])
         # -------------graph D------------#
-        print("Graph D:\n")
+        print("\nGraph D:\n")
         results = compares_run_time_cc_of_node(430, 1000000, 100000)
         self.assertEqual(results[0], results[1])
 
@@ -434,26 +439,27 @@ class MyTestCase(unittest.TestCase):
         this test checks the above on graphs from json files
         """
         connected_cc = load_java(self)[0]
+        print("connected_component (json):\n")
         # -------------graph A5 from data folder------------#
-        print("Graph A5:")
+        print("Graph A5:\n")
         file_name = "../data/A5"
         results = compares_run_time_cc_of_node_json(20, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[1], results[0])  # compare to java
         # -------------graph G_10_80_0.json from data folder------------#
-        print("Graph G_10_80_0:")
+        print("\nGraph G_10_80_0:\n")
         file_name = "../data/G_10_80_0.json"
         results = compares_run_time_cc_of_node_json(0, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[4], results[0])  # compare to java
         # -------------graph G_1000_8000_0.json from data folder------------#
-        print("Graph G_1000_8000_0:")
+        print("\nGraph G_1000_8000_0:\n")
         file_name = "../data/G_1000_8000_0.json"
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[7], results[0])  # compare to java
         # -------------graph G_100_800_0.json from data folder------------#
-        print("Graph G_100_800_0:")
+        print("\nGraph G_100_800_0:\n")
         file_name = "../data/G_100_800_0.json"
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])

@@ -10,7 +10,6 @@ class DiGraph(GraphInterface):
         self.Edges = {}  # Quick access to edges aka. get(src).get(dest)->Edge
         self.src_to_dest = {}  # key: node id,  value: dictionary of nodes whom this node id point towards.
         self.dest_to_src = {}  # key: node id,  value: dictionary of nodes whom point towards this node id.
-
         self.MC = 0
         self.VSize = 0
         self.ESize = 0
@@ -163,7 +162,7 @@ class DiGraph(GraphInterface):
             return False
         return True
 
-    def get_edge(self, node_id1: int, node_id2: int) -> EdgeData:
+    def get_edge(self, node_id1: int, node_id2: int) -> EdgeData or None:
         """
         return the edge between (node_id1,node_id2)
         :param node_id1: the src node
@@ -176,7 +175,7 @@ class DiGraph(GraphInterface):
             return None
         return self.Edges[node_id1][node_id2]
 
-    def get_node(self, node_id) -> NodeData:
+    def get_node(self, node_id) -> NodeData or None:
         """
          return the node from the graph that associated with the given key
         :param node_id: the id of the node
@@ -187,29 +186,11 @@ class DiGraph(GraphInterface):
         else:
             return self.Nodes.get(node_id)
 
-    # Additional methods
-    def __hash__(self, node_id1: int, node_id2: int) -> int:
-        """
-        create unique key from two integers
-        :param node_id1: first integer
-        :param node_id2: second integer
-        :return: unique key
-        """
-        return hash((node_id1, node_id2))
-
     def __eq__(self, o: object) -> bool:
-        #super.__eq__()
         for key in self.Nodes:
             if key not in o.Nodes:
                 return False
         return True
-
-
-
-
-
-
-
 
     def __repr__(self):
         """
