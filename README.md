@@ -1,4 +1,4 @@
-<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up1/oizxyjuxymmw.png" border="0" alt="directed1" /></a>
+![](https://github.com/ShalevAsor/Ex3/blob/master/data/directed1.png)
 
 ## What is directed weighted graph? <br>
 simple graph made up of vetices and edges. <br>
@@ -39,25 +39,27 @@ For more information, i recommend diving into the code, there is explanations at
 This class supports few algorithms like dfs tarjan and dijkstra's <br>
 it allows to save the graph into a json format and load a graph from json format <br>
 the dfs and tarjan algo used to find out if this graph is strongly connected and the connected commponents <br>
-**methods:**  connected_components - return all the strongly connected commponents in the graph <br>
-** what is strongly connected graph ? ** <br>
+**methods:** <br>
+- **connected_components:** return all the strongly connected commponents in the graph <br>
+**what is strongly connected graph ?** <br>
 it means there is a path from each node in the graph to every other node <br>
 for example: <br>
 this graph is **Not strongly connected** <br>
-<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up2/lh2ren5dkyjz.png" border="0" alt="dir2" /></a> <br>
+![](https://github.com/ShalevAsor/Ex3/blob/master/data/dir2.png) <br>
 
 this graph is **strongly connected** <br>
-<a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up3/dmtzaglnzz5j.png" border="0" alt="dir" /></a>
+![](https://github.com/ShalevAsor/Ex3/blob/master/data/dir.png)
 
 for more information about strongly connected graph : click [here](https://en.wikipedia.org/wiki/Strongly_connected_component) <br>
+
 dijkstra's algorithm used in the methods shortest_path <br>
-Shortest path :return the shortest path between two nodes in the graph and the length of the path. <br>
+- **Shortest path:** return the shortest path between two nodes in the graph and the length of the path. <br>
 the shortest path will be the path with the minimalist edges weight <br>
 for example : <br>
 <a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up2/2mdhzomitddn.png" border="0" alt="shortest" /></a> <br>
 the shortest path from node 1 to 2 is : 1---> 3--->2 <br>
 
-plot_garph : plot the graph - if the vertices has no positions the will be places in randomly (elegant) <br>
+- **plot_garph:** plot the graph - if the vertices has no positions the will be places in randomly (elegant) <br>
 **example:** <br>
-<a href="https://bbcode0.com" target="_blank"><img src="https://cdn1.bbcode0.com/uploads/2021/1/8/d4f8e7fd2b7f323d20b9a7cfdef7e6ff-full.png" border="0"/></a>
+![](https://github.com/ShalevAsor/Ex3/blob/master/data/random_graph_example.png)
 
