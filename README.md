@@ -41,7 +41,7 @@ it allows to save the graph into a json format and load a graph from json format
 the dfs and tarjan algo used to find out if this graph is strongly connected and the connected commponents <br>
 **methods:** <br>
 - **connected_components:** return all the strongly connected commponents in the graph <br>
-** what is strongly connected graph ? ** <br>
+**what is strongly connected graph ?** <br>
 it means there is a path from each node in the graph to every other node <br>
 for example: <br>
 this graph is **Not strongly connected** <br>
@@ -52,7 +52,7 @@ this graph is **strongly connected** <br>
 
 for more information about strongly connected graph : click [here](https://en.wikipedia.org/wiki/Strongly_connected_component) <br>
 dijkstra's algorithm used in the methods shortest_path <br>
-- **Shortest path:**return the shortest path between two nodes in the graph and the length of the path. <br>
+- **Shortest path:** return the shortest path between two nodes in the graph and the length of the path. <br>
 the shortest path will be the path with the minimalist edges weight <br>
 for example : <br>
 <a href="http://www.siz.co.il/"><img src="http://up419.siz.co.il/up2/2mdhzomitddn.png" border="0" alt="shortest" /></a> <br>
