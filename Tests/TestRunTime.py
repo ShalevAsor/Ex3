@@ -513,13 +513,13 @@ class MyTestCase(unittest.TestCase):
         # -------------graph G_30000_240000_1.json from data folder------------#
         print("\nGraph G_30000_240000_1:\n")
         file_name = "../data/G_30000_240000_1.json"
-        results = compares_run_time_cc_of_node_json(8, file_name)
+        results = compares_run_time_cc_of_node_json(444, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[13], results[0])
         # -------------graph G_30000_240000_1.json from data folder------------#
         print("\nGraph G_20000_160000_1:\n")
         file_name = "../data/G_20000_160000_1.json"
-        results = compares_run_time_cc_of_node_json(8, file_name)
+        results = compares_run_time_cc_of_node_json(12330, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[16], results[0])
 
