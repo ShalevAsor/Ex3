@@ -102,6 +102,7 @@ def compares_run_time_cc_of_node_json(node_id: int, file_name: str) -> list:
     """
     Compares the running time of the Connected component method in GraphAlgo  and Networkx
     The graph is created from json file
+    :param node_id:
     :param file_name:
     :return:
     """
@@ -348,10 +349,10 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
         self.assertEqual(results[3], shortest_p[13])  # path of java and GraphAlgo
         # -------------------------- on_circle-------------------------#
-        # -------------graph G_30000_240000_0.json from data folder------------#
+        # -------------graph G_30000_240000_1.json from data folder------------#
         print("\nGraph G_30000_240000_1:\n")
         file_name = "../data/G_30000_240000_1.json"
-        results = compares_run_time_sp_json(12, 3, file_name)
+        results = compares_run_time_sp_json(24, 605, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
@@ -359,7 +360,7 @@ class MyTestCase(unittest.TestCase):
         # -------------graph G_20000_160000_1.json from data folder------------#
         print("\nGraph G_20000_160000_1:\n")
         file_name = "../data/G_20000_160000_1.json"
-        results = compares_run_time_sp_json(12, 3, file_name)
+        results = compares_run_time_sp_json(1, 82, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
@@ -367,7 +368,7 @@ class MyTestCase(unittest.TestCase):
         # -------------graph G_10000_80000_1.json from data folder------------#
         print("\nGraph G_10000_80000_1:\n")
         file_name = "../data/G_10000_80000_1.json"
-        results = compares_run_time_sp_json(12, 3, file_name)
+        results = compares_run_time_sp_json(91, 4, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
