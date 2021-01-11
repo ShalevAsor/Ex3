@@ -21,12 +21,12 @@ def compares_run_time_cc(v_size: int, e_size: int) -> list:
     graph_algo = graph_list[0]  # graph algo and nx graph has the same vertices and edges
     nx_graph = graph_list[1]
     start_time = datetime.now()  # calculation of run time
-    nx_results = nx.number_strongly_connected_components(nx_graph)
+    nx_results = nx.strongly_connected_components(nx_graph)
     end_time = datetime.now()
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
     start_time = datetime.now()  # calculation of run time
-    my_results = len(graph_algo.connected_components())
+    my_results = graph_algo.connected_components()
     end_time = datetime.now()
     run_time_my = end_time - start_time
     print("run time of GraphAlgo :", run_time_my)
