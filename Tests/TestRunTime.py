@@ -347,7 +347,7 @@ class MyTestCase(unittest.TestCase):
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
         self.assertEqual(results[3], shortest_p[13])  # path of java and GraphAlgo
-        #-------------------------- on_circle-------------------------#
+        # -------------------------- on_circle-------------------------#
         # -------------graph G_30000_240000_0.json from data folder------------#
         print("\nGraph G_30000_240000_1:\n")
         file_name = "../data/G_30000_240000_1.json"
@@ -372,7 +372,6 @@ class MyTestCase(unittest.TestCase):
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
         self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
         self.assertEqual(results[3], shortest_p[13])  # path of java and GraphAlgo
-
 
     def test_comparison_connected_components(self):
         """
@@ -446,7 +445,7 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_10000_80000_1.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
-        self.assertEqual(results[0], connected_cc[13])  # compare to java
+        self.assertEqual(results[0], connected_cc[16])  # compare to java
 
     def test_comparison_connected_component(self):
         """
@@ -522,8 +521,6 @@ class MyTestCase(unittest.TestCase):
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[16], results[0])
-
-
 
 
 if __name__ == '__main__':
