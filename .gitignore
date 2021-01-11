@@ -9,7 +9,7 @@
 .idea/**/shelf
 WGraph_AlgoTest2.java
 WGraph_DSTest2.java
-<<<<<<< HEAD
+
 __pycache__
 .pyc
 plot_demo.py
@@ -17,7 +17,7 @@ plot_demo.py
 myGraph
 g0
 plot_demo
->>>>>>> 8ba16ae28712a84948d1428fa3cf4486fd6508e8
+
 Ex2.iml
 .idea
 Ariel_OOP_2020
@@ -25,7 +25,7 @@ graph.json
 myGraph.file
 # Generated files
 .idea/**/contentModel.xml
-
+venv
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
