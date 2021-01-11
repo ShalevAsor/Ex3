@@ -266,8 +266,8 @@ def load_java(self) -> list:
             ShortestPath = jsonObject["ShortestPath"]
             list = [ConnectedComponentsToNode, NumOfScc, ShortestPathDist, ShortestPath]
             return list
-    except Exception:
-        print("json issue")
+    except IOError as ex:
+        print(ex)
 
 
 class MyTestCase(unittest.TestCase):
@@ -355,24 +355,18 @@ class MyTestCase(unittest.TestCase):
         results = compares_run_time_sp_json(24, 605, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
-        self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
-        self.assertEqual(results[3], shortest_p[13])  # path of java and GraphAlgo
         # -------------graph G_20000_160000_1.json from data folder------------#
         print("\nGraph G_20000_160000_1:\n")
         file_name = "../data/G_20000_160000_1.json"
         results = compares_run_time_sp_json(1, 82, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
-        self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
-        self.assertEqual(results[3], shortest_p[13])  # path of java and GraphAlgo
         # -------------graph G_10000_80000_1.json from data folder------------#
         print("\nGraph G_10000_80000_1:\n")
         file_name = "../data/G_10000_80000_1.json"
         results = compares_run_time_sp_json(91, 4, file_name)
         self.assertEqual(results[0], results[2])  # path weight of networkx and GrpahAlgo
         self.assertListEqual(results[1], results[3])  # path of networkx nad GraphAlgo
-        self.assertEqual(results[2], shortest_pd[13])  # path weight of java and GraphAlgo
-        self.assertEqual(results[3], shortest_p[13])  # path of java and GraphAlgo
 
     def test_comparison_connected_components(self):
         """
@@ -387,6 +381,7 @@ class MyTestCase(unittest.TestCase):
         # -------------graph A------------#
         print("Graph A:")
         results = compares_run_time_cc(100, 100)
+        print(results[0])
         self.assertEqual(results[0], results[1])
         # -------------graph B------------#
         print("\nGraph B:\n")
@@ -428,25 +423,23 @@ class MyTestCase(unittest.TestCase):
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
         self.assertEqual(results[0], connected_cc[7])  # compare to java
+
         # -------------------------- on_circle-------------------------#
         # -------------graph G_30000_240000_1.json from data folder------------#
         print("\nGraph G_30000_240000_1:\n")
         file_name = "../data/G_30000_240000_1.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
-        self.assertEqual(results[0], connected_cc[10])  # compare to java
         # -------------graph G_20000_160000_1.json from data folder------------#
         print("\nGraph G_20000_160000_1:\n")
         file_name = "../data/G_20000_160000_1.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
-        self.assertEqual(results[0], connected_cc[13])  # compare to java
         # -------------graph G_10000_80000_1.json from data folder------------#
         print("\nGraph G_10000_80000_1:\n")
         file_name = "../data/G_10000_80000_1.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
-        self.assertEqual(results[0], connected_cc[16])  # compare to java
 
     def test_comparison_connected_component(self):
         """
@@ -509,19 +502,18 @@ class MyTestCase(unittest.TestCase):
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[10], results[0])
+
         # -------------------------- on_circle-------------------------#
         # -------------graph G_30000_240000_1.json from data folder------------#
         print("\nGraph G_30000_240000_1:\n")
         file_name = "../data/G_30000_240000_1.json"
         results = compares_run_time_cc_of_node_json(444, file_name)
         self.assertEqual(results[0], results[1])
-        self.assertEqual(connected_cc[13], results[0])
         # -------------graph G_30000_240000_1.json from data folder------------#
         print("\nGraph G_20000_160000_1:\n")
         file_name = "../data/G_20000_160000_1.json"
         results = compares_run_time_cc_of_node_json(12330, file_name)
         self.assertEqual(results[0], results[1])
-        self.assertEqual(connected_cc[16], results[0])
 
 
 if __name__ == '__main__':

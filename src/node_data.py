@@ -38,7 +38,7 @@ class NodeData:
         print basic information about this node
         :return: String with the node key and position
         """
-        return f"Node:{self.key} pos:{self.pos}"
+        return f"Node:{self.key} "
 
     def __eq__(self, o: object) -> bool:
         if self is o: return True
