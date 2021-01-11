@@ -191,13 +191,14 @@ class GraphAlgo(GraphAlgoInterface):
         Returns
         -------
         """
-        if self.Graph.get_node(id1) is None or self.Graph is None:
+        if self.get_graph() is None: return []
+        if self.Graph.get_node(id1) is None:
             return []
         listA = self.Trajans()
         for scc in listA:
             if id1 in scc:
                 return scc
-        return None
+        return []
 
     def connected_components(self) -> List[list]:
         """

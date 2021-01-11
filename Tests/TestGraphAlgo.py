@@ -130,9 +130,18 @@ class MyTestCase(unittest.TestCase):
         g.get_graph().add_edge(7, 8, 8)
         list1 = g.connected_component(6)  # the strongly connected list whom node 6 belongs to
         list2 = g.connected_components()  # list of all the strongly connected components
-        list1manual = [NodeData(7), NodeData(6), NodeData(5)]
+        list1manual = [7, 6, 5]
         self.assertEqual(list1, list1manual)
-        self.assertEqual(list2, [[NodeData(4), NodeData(3), NodeData(2), NodeData(1)], [NodeData(8)], list1manual])
+        self.assertEqual(list2, [[4, 3, 2, 1], [8], list1manual])
+        empty_g=DiGraph()
+        e=GraphAlgo(empty_g)
+        self.assertEqual(e.connected_components(),[]) # the graph is empty
+        e=GraphAlgo()
+        self.assertEqual(e.connected_components(),[]) # the graph is None
+        e = GraphAlgo(empty_g)
+        self.assertEqual(e.connected_component(4), [])  # the graph is empty
+        e = GraphAlgo()
+        self.assertEqual(e.connected_component(4), [])  # the graph is None
 
     def test_graph_plot(self):
         """
