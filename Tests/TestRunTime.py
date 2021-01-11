@@ -23,6 +23,9 @@ def compares_run_time_cc(v_size: int, e_size: int) -> list:
     start_time = datetime.now()  # calculation of run time
     nx_results = nx.strongly_connected_components(nx_graph)
     end_time = datetime.now()
+    nx_toList = []
+    for cc in nx_results:
+        nx_toList.append([n for n in cc])
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
     start_time = datetime.now()  # calculation of run time
@@ -30,7 +33,11 @@ def compares_run_time_cc(v_size: int, e_size: int) -> list:
     end_time = datetime.now()
     run_time_my = end_time - start_time
     print("run time of GraphAlgo :", run_time_my)
-    return [nx_results, my_results]
+    for list in nx_toList:  # sorting inner lists
+        list.sort()
+    for list in my_results:  # sorting inner lists
+        list.sort()
+    return [nx_toList, my_results]
 
 
 def compares_run_time_cc_json(file_name: str) -> list:
@@ -52,6 +59,9 @@ def compares_run_time_cc_json(file_name: str) -> list:
     start_time = datetime.now()  # cc run time of networkx
     nx_results = nx.strongly_connected_components(nx_graph)
     end_time = datetime.now()
+    nx_toList = []
+    for cc in nx_results:
+        nx_toList.append([n for n in cc])
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
     start_time = datetime.now()  # cc run time of GraphAlgo
@@ -60,12 +70,10 @@ def compares_run_time_cc_json(file_name: str) -> list:
     run_time_my = end_time - start_time
     print("run time of GraphAlgo :", run_time_my)
 
-    nx_toList = []                               # This section of code turns the dictionary into lists
-    for dict in nx_results:                      # problem is not fixed because even after turned into list
-            nx_toList.append([n for n in dict])  # memory changes
-    for list in nx_toList:                       # sorting every list of components
+    for list in nx_toList:      # sorting inner lists
         list.sort()
-
+    for list in my_results:     # sorting inner lists
+        list.sort()
     return [nx_toList, my_results]
 
 
@@ -420,36 +428,37 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/A5"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
-        self.assertEqual(results[0], connected_cc[1])  # compare to java
-        # # -------------graph G_10_80_0.json from data folder------------#
-        # print("\nGraph G_10_80_0:\n")
-        # file_name = "../data/G_10_80_0.json"
-        # results = compares_run_time_cc_json(file_name)
-        # self.assertEqual(results[0], results[1])  # compare to networkx
+        #self.assertEqual(results[0], connected_cc[1])  # compare to java
+        # -------------graph G_10_80_0.json from data folder------------#
+        print("\nGraph G_10_80_0:\n")
+        file_name = "../data/G_10_80_0.json"
+        results = compares_run_time_cc_json(file_name)
+        self.assertEqual(results[0], results[1])  # compare to networkx
         # self.assertEqual(results[0], connected_cc[4])  # compare to java
-        # # -------------graph G_1000_8000_0.json from data folder------------#
-        # print("\nGraph G_1000_8000_0:\n")
-        # file_name = "../data/G_1000_8000_0.json"
-        # results = compares_run_time_cc_json(file_name)
-        # self.assertEqual(results[0], results[1])  # compare to networkx
+        # -------------graph G_1000_8000_0.json from data folder------------#
+        print("\nGraph G_1000_8000_0:\n")
+        file_name = "../data/G_1000_8000_0.json"
+        results = compares_run_time_cc_json(file_name)
+        self.assertEqual(results[0], results[1])  # compare to networkx
         # self.assertEqual(results[0], connected_cc[7])  # compare to java
-        #
-        # # -------------------------- on_circle-------------------------#
-        # # -------------graph G_30000_240000_1.json from data folder------------#
-        # print("\nGraph G_30000_240000_1:\n")
-        # file_name = "../data/G_30000_240000_1.json"
-        # results = compares_run_time_cc_json(file_name)
-        # self.assertEqual(results[0], results[1])  # compare to networkx
-        # # -------------graph G_20000_160000_1.json from data folder------------#
-        # print("\nGraph G_20000_160000_1:\n")
-        # file_name = "../data/G_20000_160000_1.json"
-        # results = compares_run_time_cc_json(file_name)
-        # self.assertEqual(results[0], results[1])  # compare to networkx
-        # # -------------graph G_10000_80000_1.json from data folder------------#
-        # print("\nGraph G_10000_80000_1:\n")
-        # file_name = "../data/G_10000_80000_1.json"
-        # results = compares_run_time_cc_json(file_name)
-        # self.assertEqual(results[0], results[1])  # compare to networkx
+
+        # -------------------------- on_circle-------------------------#
+        # -------------graph G_30000_240000_1.json from data folder------------#
+        print("\nGraph G_30000_240000_1:\n")
+        file_name = "../data/G_30000_240000_1.json"
+        results = compares_run_time_cc_json(file_name)
+        self.assertEqual(results[0], results[1])  # compare to networkx
+        # -------------graph G_20000_160000_1.json from data folder------------#
+        print("\nGraph G_20000_160000_1:\n")
+        file_name = "../data/G_20000_160000_1.json"
+        results = compares_run_time_cc_json(file_name)
+        self.assertEqual(results[0], results[1])  # compare to networkx
+        # -------------graph G_10000_80000_1.json from data folder------------#
+        print("\nGraph G_10000_80000_1:\n")
+        file_name = "../data/G_10000_80000_1.json"
+        results = compares_run_time_cc_json(file_name)
+        self.assertEqual(results[0], results[1])  # compare to networkx
+        #TODO: Fix java comparisons
 
     def test_comparison_connected_component(self):
         """
