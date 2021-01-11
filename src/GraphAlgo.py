@@ -30,10 +30,17 @@ class GraphAlgo(GraphAlgoInterface):
         This inner class used in Dijkstra's Algorithm
         """
 
-        def __init__(self, parent: int, current: int, weight: float = math.inf):
+        def __init__(self, parent: int, current: int, weight: float = math.inf, name = None):
             self.parent_key = parent
             self.current_key = current
             self.weight = weight
+
+            #  *--------Trajan's variables-----------*
+            self.name = name
+            self.index = None
+            self.lowlink = None
+            self.adj = []
+            self.on_stack = False
 
         def __repr__(self):
             return f"cur_key:{self.current_key},p_key:{self.parent_key},weight:{self.weight}"
@@ -176,47 +183,30 @@ class GraphAlgo(GraphAlgoInterface):
         return tuple(s_path)
 
     def connected_component(self, id1: int) -> list:
+        """
+        this function is taking the main trajan's algorithm
+        and iterates each list in the list of strongly
+        connected components until it finds the
+        desired node id, then returns the list it was found at.
+        Returns
+        -------
+        """
         if self.Graph.get_node(id1) is None or self.Graph is None:
             return []
-
-        stack = deque()
-        scc = {}
-        for key, value in self.Graph.get_all_v().items():
-            value.visited = False
-            value.w = -1
-            value.t = -1
-
-        for key, value in self.Graph.get_all_v().items():
-            if value.w == -1:
-                self.find_sc(value, stack, scc, self.get_graph())
-
-        self.staticNum = 0
-        for key, value in scc.items():
-            for x in value:
-                if x.key == id1:
-                    return value
+        listA = self.Trajans()
+        for scc in listA:
+            if id1 in scc:
+                return scc
+        return None
 
     def connected_components(self) -> List[list]:
+        """
+        Returns simple returns the value of trajan's algorithm
+        aka List(list) of strongly connected components
+        """
         if self.Graph is None:
             return []
-
-        stack = deque()
-        scc = {}
-        for key, value in self.Graph.get_all_v().items():
-            value.visited = False
-            value.w = -1
-            value.t = -1
-
-        for key, value in self.Graph.get_all_v().items():
-            if value.w == -1:
-                self.find_sc(value, stack, scc, self.get_graph())
-
-        self.staticNum = 0
-        TheList = []
-        for key, value in scc.items():
-            TheList.append(value)
-        return TheList
-        pass
+        return self.Trajans()
 
     def plot_graph(self) -> None:
         # data members
@@ -335,6 +325,9 @@ class GraphAlgo(GraphAlgoInterface):
         dist_and_path[1] = short_path
         return dist_and_path
 
+    # this is the recursive trajan algorithm implementation that first firstly used
+    # unfortunately this version does not support large graphs in python due to stackoverflow of recursive calls
+    # therefore we had to implement an iterative version of it
     def find_sc(self, vertex: NodeData, stack: deque, hashmap: {}, graph: GraphInterface):
         """
         Trajan's algorithm - https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
@@ -370,3 +363,63 @@ class GraphAlgo(GraphAlgoInterface):
                     hashmap[vertex.t].append(node)
 
                 node.visited = False
+
+
+    def Trajans(self) -> [[]]:
+        """
+        this is the iterative implementation of trajan's algorithm
+        Returns list(list()) including all the Strongly connected component
+        -------
+
+        """
+        ed = {}
+        for n in self.get_graph().get_all_v().keys():
+            ed[n] = self.SubNode(-1, -1, -1, n)
+
+        for n in self.get_graph().get_all_v().keys():
+            for neigh in self.get_graph().all_out_edges_of_node(n).keys():
+                ed[n].adj.append(ed[neigh])
+        vs = ed.values()
+        i = 0
+        stack = []
+        call_stack = []
+        comps = []
+        for v in vs:
+            if v.index is None:
+                call_stack.append((v, 0))
+                while call_stack:
+                    v, pi = call_stack.pop()
+                    # If this is first time we see v
+                    if pi == 0:
+                        v.index = i
+                        v.lowlink = i
+                        i += 1
+                        stack.append(v)
+                        v.on_stack = True
+                    # If we just backtracked on something
+                    if pi > 0:
+                        prev = v.adj[pi - 1]
+                        v.lowlink = min(v.lowlink, prev.lowlink)
+                    # Find the next thing to recurse on
+                    while pi < len(v.adj) and v.adj[pi].index is not None:
+                        w = v.adj[pi]
+                        if w.on_stack:
+                            v.lowlink = min(v.lowlink, w.index)
+                        pi += 1
+                    # If we found something with index=None, recurse
+                    if pi < len(v.adj):
+                        w = v.adj[pi]
+                        call_stack.append((v, pi + 1))
+                        call_stack.append((w, 0))
+                        continue
+                    # If v is the root of a connected component
+                    if v.lowlink == v.index:
+                        comp = []
+                        while True:
+                            w = stack.pop()
+                            w.on_stack = False
+                            comp.append(w.name)
+                            if w is v:
+                                break
+                        comps.append(comp)
+        return comps
