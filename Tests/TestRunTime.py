@@ -440,7 +440,6 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_1000_8000_0.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
-        print(results[0])
         self.assertEqual(results[0], connected_cc[7])  # compare to java
 
         # -------------------------- on_circle-------------------------#
@@ -522,10 +521,15 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_30000_240000_1.json"
         results = compares_run_time_cc_of_node_json(444, file_name)
         self.assertEqual(results[0], results[1])
-        # -------------graph G_30000_240000_1.json from data folder------------#
+        # -------------graph G_20000_160000_1.json from data folder------------#
         print("\nGraph G_20000_160000_1:\n")
         file_name = "../data/G_20000_160000_1.json"
         results = compares_run_time_cc_of_node_json(12330, file_name)
+        self.assertEqual(results[0], results[1])
+        # -------------graph G_10000_80000_1.json from data folder------------#
+        print("\nGraph G_10000_80000_1:\n")
+        file_name = "../data/G_10000_80000_1.json"
+        results = compares_run_time_cc_of_node_json(3, file_name)
         self.assertEqual(results[0], results[1])
 
 

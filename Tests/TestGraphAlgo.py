@@ -6,6 +6,11 @@ import random
 
 
 def graph_creator(v_size: int) -> GraphAlgo:
+    """
+    generate basic graph with the given number of vertices
+    :param v_size: number of vertices
+    :return: GraphAlgo
+    """
     e = DiGraph()
     i = 1
     while i <= v_size:
