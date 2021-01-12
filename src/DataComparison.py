@@ -8,17 +8,6 @@ if __name__ == '__main__':
     # labels = ['G10', 'G1K', 'G20K', 'G30K']
     # nx_runtime = [0.0, 0.004000, 0.120001, 0.197962]
     # ga_runtime = [0.0, 0.009001, 0.320001, 0.662059]
-<<<<<<< HEAD
-    # ga_java_runtime = [0, 0.001, 0.221, 0.316]
-    # -----------connected_components-----------#
-    title = "node's strongly connected component"
-    labels = ['G10', 'G1K', 'A5']
-    nx_runtime = [0.0, 0.015972, 0.0]
-    ga_runtime = [0.003988, 0.008812, 0.0]
-    ga_java_runtime = [0, 0, 0]
-    # -----------connected_component-----------#
-    # title="connected_component run time"
-=======
     # ga_java_runtime = [0, 0.001, 0.221,0.316]
     # -----------Connected components-----------#
     # title = "Connected components "
@@ -28,7 +17,6 @@ if __name__ == '__main__':
     # ga_java_runtime = [0, 0.01219, 0]
     # -----------Connected component-----------#
     # title="Connected component"
->>>>>>> 83d8f1cfa69d578cbb0d12a8766e60f57dba8a1d
     # labels = ['G10', 'G1K', 'A5',]
     # nx_runtime = [0.0, 0.021676,0.001008]
     # ga_runtime = [0.0, 0.014198, 0.0]
@@ -56,11 +44,7 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(figsize=(9.0, 9.0))
     nx = ax.bar(x - width, nx_runtime, width, label='networkx')
     ga = ax.bar(x, ga_runtime, width, label='GraphAlgo')
-<<<<<<< HEAD
-    ga_java = ax.bar(x+width, ga_java_runtime, width, label='DW_GraphAlgo-java')
-=======
     #ga_java = ax.bar(x + width, ga_java_runtime, width, label='DW_GraphAlgo-java')
->>>>>>> 83d8f1cfa69d578cbb0d12a8766e60f57dba8a1d
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('runtime-seconds')

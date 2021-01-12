@@ -23,10 +23,10 @@ def compares_run_time_cc(v_size: int, e_size: int) -> list:
     start_time = datetime.now()  # calculation of run time
     nx_results = nx.strongly_connected_components(nx_graph)
     end_time = datetime.now()
+    run_time_nx = end_time - start_time
     nx_toList = []
     for cc in nx_results:
         nx_toList.append([n for n in cc])
-    run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
     start_time = datetime.now()  # calculation of run time
     my_results = graph_algo.connected_components()
@@ -59,10 +59,10 @@ def compares_run_time_cc_json(file_name: str) -> list:
     start_time = datetime.now()  # cc run time of networkx
     nx_results = nx.strongly_connected_components(nx_graph)
     end_time = datetime.now()
+    run_time_nx = end_time - start_time
     nx_toList = []
     for cc in nx_results:
         nx_toList.append([n for n in cc])
-    run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
     start_time = datetime.now()  # cc run time of GraphAlgo
     my_results = graph_algo.connected_components()
@@ -399,7 +399,6 @@ class MyTestCase(unittest.TestCase):
         # -------------graph A------------#
         print("Graph A:")
         results = compares_run_time_cc(100, 100)
-        print(results[0])
         self.assertEqual(results[0], results[1])
         # -------------graph B------------#
         print("\nGraph B:\n")
