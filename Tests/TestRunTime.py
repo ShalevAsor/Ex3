@@ -459,7 +459,6 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_10000_80000_1.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
-        #TODO: Fix java comparisons
 
     def test_comparison_connected_component(self):
         """
