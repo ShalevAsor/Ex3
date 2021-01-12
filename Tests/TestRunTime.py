@@ -23,6 +23,9 @@ def compares_run_time_cc(v_size: int, e_size: int) -> list:
     start_time = datetime.now()  # calculation of run time
     nx_results = nx.strongly_connected_components(nx_graph)
     end_time = datetime.now()
+    nx_toList = []
+    for cc in nx_results:
+        nx_toList.append([n for n in cc])
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
     start_time = datetime.now()  # calculation of run time
@@ -30,7 +33,11 @@ def compares_run_time_cc(v_size: int, e_size: int) -> list:
     end_time = datetime.now()
     run_time_my = end_time - start_time
     print("run time of GraphAlgo :", run_time_my)
-    return [nx_results, my_results]
+    for list in nx_toList:  # sorting inner lists
+        list.sort()
+    for list in my_results:  # sorting inner lists
+        list.sort()
+    return [nx_toList, my_results]
 
 
 def compares_run_time_cc_json(file_name: str) -> list:
@@ -52,6 +59,9 @@ def compares_run_time_cc_json(file_name: str) -> list:
     start_time = datetime.now()  # cc run time of networkx
     nx_results = nx.strongly_connected_components(nx_graph)
     end_time = datetime.now()
+    nx_toList = []
+    for cc in nx_results:
+        nx_toList.append([n for n in cc])
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
     start_time = datetime.now()  # cc run time of GraphAlgo
@@ -59,7 +69,12 @@ def compares_run_time_cc_json(file_name: str) -> list:
     end_time = datetime.now()
     run_time_my = end_time - start_time
     print("run time of GraphAlgo :", run_time_my)
-    return [nx_results, my_results]
+
+    for list in nx_toList:      # sorting inner lists
+        list.sort()
+    for list in my_results:     # sorting inner lists
+        list.sort()
+    return [nx_toList, my_results]
 
 
 def compares_run_time_cc_of_node(node_id: int, v_size: int, e_size: int) -> list:
@@ -89,7 +104,7 @@ def compares_run_time_cc_of_node(node_id: int, v_size: int, e_size: int) -> list
     cc = list()
     i = 0
     for node in my_results:
-        cc.append(node.key)
+        cc.append(node)
         i += 1
     cc.sort(reverse=True)  # sort the list
     nx_results.sort(reverse=True)
@@ -118,7 +133,7 @@ def compares_run_time_cc_of_node_json(node_id: int, file_name: str) -> list:
     start_time = datetime.now()
     for cc_of_node in nx.strongly_connected_components(nx_graph):
         if node_id in cc_of_node:
-            nx_results = list(cc_of_node)
+            nx_results = cc_of_node
     end_time = datetime.now()
     run_time_nx = end_time - start_time
     print("run time of networkx graph:", run_time_nx)
@@ -128,12 +143,15 @@ def compares_run_time_cc_of_node_json(node_id: int, file_name: str) -> list:
     cc = list()
     i = 0
     for node in my_results:
-        cc.append(node.key)
+        cc.append(node)
         i += 1
     cc.sort()
     run_time_graph_algo = end_time - start_time
     print("run time of GraphAlgo :", run_time_graph_algo)
-    return [nx_results, cc]
+    nx_results_toList = []
+    for i in nx_results:
+        nx_results_toList.append(i)
+    return [nx_results_toList, cc]
 
 
 def compares_run_time_sp(src: int, dest: int, v_size: int, e_size: int) -> list:
@@ -422,6 +440,7 @@ class MyTestCase(unittest.TestCase):
         file_name = "../data/G_1000_8000_0.json"
         results = compares_run_time_cc_json(file_name)
         self.assertEqual(results[0], results[1])  # compare to networkx
+        print(results[0])
         self.assertEqual(results[0], connected_cc[7])  # compare to java
 
         # -------------------------- on_circle-------------------------#
@@ -496,12 +515,6 @@ class MyTestCase(unittest.TestCase):
         results = compares_run_time_cc_of_node_json(8, file_name)
         self.assertEqual(results[0], results[1])
         self.assertEqual(connected_cc[7], results[0])  # compare to java
-        # -------------graph G_100_800_0.json from data folder------------#
-        print("\nGraph G_100_800_0:\n")
-        file_name = "../data/G_100_800_0.json"
-        results = compares_run_time_cc_of_node_json(8, file_name)
-        self.assertEqual(results[0], results[1])
-        self.assertEqual(connected_cc[10], results[0])
 
         # -------------------------- on_circle-------------------------#
         # -------------graph G_30000_240000_1.json from data folder------------#
